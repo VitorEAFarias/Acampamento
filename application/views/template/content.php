@@ -1,0 +1,4 @@
+<?= $header?>
+<?= isset($sidebar)? $sidebar: ''?>
+<?= isset($content)? $content: ''?>
+<?= $footer?>
