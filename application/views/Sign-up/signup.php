@@ -18,21 +18,21 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="../pages/profile.html">
+                        <a class="nav-link me-2" href="<?= base_url('Dashboard/profile') ?>">
                             <i class="fa fa-user opacity-6  me-1"></i>
-                            Profile
+                            Perfil
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="../pages/sign-up.html">
+                        <a class="nav-link me-2" href="<?= base_url('Dashboard/signup') ?>">
                             <i class="fas fa-user-circle opacity-6  me-1"></i>
-                            Sign Up
+                            Cadastrar
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="../pages/sign-in.html">
+                        <a class="nav-link me-2" href="<?= base_url('Dashboard/signin') ?>">
                             <i class="fas fa-key opacity-6  me-1"></i>
-                            Sign In
+                            Entrar
                         </a>
                     </li>
                 </ul>
@@ -46,8 +46,8 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-5 text-center mx-auto">
-                        <h1 class="text-white mb-2 mt-5">Welcome!</h1>
-                        <p class="text-lead text-white">Use these awesome forms to login or create new account in your project for free.</p>
+                        <h1 class="text-white mb-2 mt-5">Bem Vindo(a)!</h1>
+                        <p class="text-lead text-white"></p>
                     </div>
                 </div>
             </div>
@@ -62,24 +62,24 @@
                         <div class="card-body">                            
                             <form role="form">
                                 <div class="mb-3">
-                                    <input type="text" class="form-control" placeholder="Name" aria-label="Name">
+                                    <input type="nome" class="form-control" placeholder="Nome" aria-label="Name">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                                    <input type="email" class="form-control" placeholder="E-mail" aria-label="Email">
                                 </div>
                                 <div class="mb-3">
-                                    <input type="password" class="form-control" placeholder="Password" aria-label="Password">
+                                    <input type="senha" class="form-control" placeholder="Senha" aria-label="Password">
                                 </div>
                                 <div class="form-check form-check-info text-start">
                                     <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
                                     <label class="form-check-label" for="flexCheckDefault">
-                                        I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
+                                        Eu aceito os <a href="javascript:;" class="text-dark font-weight-bolder">Termos e Condições</a>
                                     </label>
                                 </div>
                                 <div class="text-center">
-                                    <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Sign up</button>
+                                    <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Cadastrar</button>
                                 </div>
-                                <p class="text-sm mt-3 mb-0">Already have an account? <a href="javascript:;" class="text-dark font-weight-bolder">Sign in</a></p>
+                                <p class="text-sm mt-3 mb-0">Já tem uma conta? <a href="<?= base_url('Dashboard/signin')?>" class="text-dark font-weight-bolder">Entrar</a></p>
                             </form>
                         </div>
                     </div>

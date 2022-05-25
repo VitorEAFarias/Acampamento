@@ -15,6 +15,7 @@ class Dashboard extends CI_Controller {
 	
 	public function index()
 	{		
+		$this->data["content"] = $this->load->view("Dashboard/dashboard", null, true);
 		$this->data["sidebar"] = $this->load->view("template/sidebar", null, true);
 		$this->load->view("template/content", $this->data);
 	}
@@ -28,6 +29,13 @@ class Dashboard extends CI_Controller {
 	public function signup()
 	{
 		$this->data["content"] = $this->load->view("Sign-up/signup", $this->data, true);
+		$this->load->view("template/content", $this->data);
+	}
+
+	public function profile()
+	{
+		$this->data["sidebar"] = $this->load->view("template/sidebar", null, true);
+		$this->data["content"] = $this->load->view("Profile/profile", $this->data, true);
 		$this->load->view("template/content", $this->data);
 	}
 }
