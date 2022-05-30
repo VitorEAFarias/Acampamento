@@ -18,7 +18,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="<?= base_url('Dashboard/profile') ?>">
+                        <a class="nav-link me-2" href="<?= base_url('Usuarios/index') ?>">
                             <i class="fa fa-user opacity-6  me-1"></i>
                             Perfil
                         </a>
@@ -52,40 +52,42 @@
                 </div>
             </div>
         </div>
-        <div class="container">
-            <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
-                <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
-                    <div class="card z-index-0">
-                            <div class="text-center pt-4">
-                                <h5>Registre-se</h5>
+        <form id="frmUsuario">
+            <div class="container">
+                <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+                    <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+                        <div class="card z-index-0">
+                                <div class="text-center pt-4">
+                                    <h5>Registre-se</h5>
+                                </div>
+                            <div class="card-body">                            
+                                <form role="form">
+                                    <div class="mb-3">
+                                        <input type="nome" name="nome" class="form-control" placeholder="Nome" aria-label="Name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" name="email" class="form-control" placeholder="E-mail" aria-label="Email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="senha" name="senha" class="form-control" placeholder="Senha" aria-label="Password">
+                                    </div>
+                                    <div class="form-check form-check-info text-start">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            Eu aceito os <a href="javascript:;" class="text-dark font-weight-bolder">Termos e Condições</a>
+                                        </label>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn bg-gradient-dark w-100 my-4 mb-2">Cadastrar</button>
+                                    </div>
+                                    <p class="text-sm mt-3 mb-0">Já tem uma conta? <a href="<?= base_url('Dashboard/signin')?>" class="text-dark font-weight-bolder">Entrar</a></p>
+                                </form>
                             </div>
-                        <div class="card-body">                            
-                            <form role="form">
-                                <div class="mb-3">
-                                    <input type="nome" class="form-control" placeholder="Nome" aria-label="Name">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="email" class="form-control" placeholder="E-mail" aria-label="Email">
-                                </div>
-                                <div class="mb-3">
-                                    <input type="senha" class="form-control" placeholder="Senha" aria-label="Password">
-                                </div>
-                                <div class="form-check form-check-info text-start">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Eu aceito os <a href="javascript:;" class="text-dark font-weight-bolder">Termos e Condições</a>
-                                    </label>
-                                </div>
-                                <div class="text-center">
-                                    <button type="button" class="btn bg-gradient-dark w-100 my-4 mb-2">Cadastrar</button>
-                                </div>
-                                <p class="text-sm mt-3 mb-0">Já tem uma conta? <a href="<?= base_url('Dashboard/signin')?>" class="text-dark font-weight-bolder">Entrar</a></p>
-                            </form>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
     </main>
     <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
     <footer class="footer py-5">
@@ -120,23 +122,4 @@
             </div>
         </div>
     </footer>
-    <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
-    <!--   Core JS Files   -->
-    <script src="<? base_url('assets/js/core/popper.min.js') ?>"></script>
-    <script src="<? base_url('assets/js/core/bootstrap.min.js') ?>"></script>
-    <script src="<? base_url('assets/js/plugins/perfect-scrollbar.min.js') ?>"></script>
-    <script src="<? base_url('assets/js/plugins/smooth-scrollbar.min.js') ?>"></script>
-    <script>
-    var win = navigator.platform.indexOf('Win') > -1;
-    if (win && document.querySelector('#sidenav-scrollbar')) {
-      var options = {
-        damping: '0.5'
-      }
-      Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
-    }
-    </script>
-    <!-- Github buttons -->
-    <script async defer src="https://buttons.github.io/buttons.js"></script>
-    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="<? base_url('assets/js/argon-dashboard.min.js?v=2.0.2') ?>"></script>
 </body>
