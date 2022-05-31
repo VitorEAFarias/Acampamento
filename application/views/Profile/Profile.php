@@ -56,13 +56,13 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Usuário</label>
-                                            <input class="form-control" type="text" value="">
+                                            <input class="form-control" type="text" value="<?= $dataUser ? $dataUser->nome : '' ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Email</label>
-                                            <input class="form-control" type="email" value="">
+                                            <input class="form-control" type="email" value="<?= $dataUser ? $dataUser->email : '' ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

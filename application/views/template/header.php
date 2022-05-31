@@ -19,4 +19,6 @@
     <link href="<?= base_url('assets/css/nucleo-svg.css') ?>"rel="stylesheet" />
     <!-- CSS Files -->
     <link id="pagestyle" href="<?= base_url('assets/css/argon-dashboard.css?v=2.0.2') ?>" rel="stylesheet" />
+    <!--swal=seet alert-->
+    <link rel="stylesheet" href="<?= base_url('assets/js/plugins/sweetalert2/sweetalert2.min.css') ?>" />
 </head>

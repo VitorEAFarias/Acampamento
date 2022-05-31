@@ -24,13 +24,13 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="<?= base_url('Dashboard/signup') ?>">
+                        <a class="nav-link me-2" href="<?= base_url('Usuarios/signup') ?>">
                             <i class="fas fa-user-circle opacity-6  me-1"></i>
                             Cadastrar
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link me-2" href="<?= base_url('Dashboard/signin') ?>">
+                        <a class="nav-link me-2" href="<?= base_url('Usuarios/signin') ?>">
                             <i class="fas fa-key opacity-6  me-1"></i>
                             Entrar
                         </a>
@@ -63,16 +63,16 @@
                             <div class="card-body">                            
                                 <form role="form">
                                     <div class="mb-3">
-                                        <input type="nome" name="nome" class="form-control" placeholder="Nome" aria-label="Name">
+                                        <input type="text" name="nome" class="form-control" placeholder="Nome" aria-label="Name">
                                     </div>
                                     <div class="mb-3">
                                         <input type="email" name="email" class="form-control" placeholder="E-mail" aria-label="Email">
                                     </div>
                                     <div class="mb-3">
-                                        <input type="senha" name="senha" class="form-control" placeholder="Senha" aria-label="Password">
+                                        <input type="password" name="senha" class="form-control" placeholder="Senha" aria-label="Password">
                                     </div>
                                     <div class="form-check form-check-info text-start">
-                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" checked>
+                                        <input class="form-check-input" type="checkbox" value="1" name="termosUso" id="flexCheckDefault" checked>
                                         <label class="form-check-label" for="flexCheckDefault">
                                             Eu aceito os <a href="javascript:;" class="text-dark font-weight-bolder">Termos e Condições</a>
                                         </label>

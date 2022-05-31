@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    console.log('document')
     $("#frmUsuario").submit( function(e){
         e.preventDefault();    
         var data = $(this).serialize();
@@ -14,7 +13,7 @@ $(document).ready(function () {
             dataType: "json",
             data: data,
             success: function (rst){
-                if(rst.result === false)
+                if(rst.rst === false)
                 {
                     swal("Erro!", rst.msg, "warning");
                 }
@@ -26,7 +25,7 @@ $(document).ready(function () {
                         confirmButtonText: "Ok",
                         html: rst.msg,
                     }).then((data) => {
-                        window.location.href = '<?= base_url("Dashboard/profile")?>/'+rst.id+'';
+                        window.location.href = BASE_URL+"Usuarios/index/"+rst.id;
                     })                          
                 }
             }
