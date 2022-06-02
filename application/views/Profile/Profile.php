@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
     <body class="g-sidenav-show bg-gray-100">  
         <div class="main-content position-relative max-height-vh-100 h-100">
             <div class="card shadow-lg mx-4 card-profile-bottom">
@@ -56,7 +56,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Usuário</label>
-                                            <input class="form-control" type="text" value="<?= $dataUser ? $dataUser->nome : '' ?>">
+                                            <input class="form-control" type="text" value="<?= $dataUser ? $dataUser->usuario : '' ?>">
                                         </div>
                                     </div>
                                     <div class="col-md-6">

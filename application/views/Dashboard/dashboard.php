@@ -14,7 +14,7 @@
                   <img src="https://gartic.com.br/imgs/mural/su/supersonic_br/um-desenho-qualquer-15.png" class="d-block w-100" alt="...">
               </div>
               <div class="carousel-item">
-                  <img src="..." class="d-block w-100" alt="...">
+                  <!--<img src="..." class="d-block w-100" alt="...">-->
               </div>
           </div>
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

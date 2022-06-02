@@ -27,7 +27,7 @@
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link me-2" href="<?= base_url('Dashboard/signup') ?>">
+                                    <a class="nav-link me-2" href="<?= base_url('Usuarios/signup') ?>">
                                         <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                                         Cadastrar
                                     </a>
@@ -58,19 +58,19 @@
                                 <p class="mb-0">Digite seu e-mail e senha para entrar</p>
                                 </div>
                                 <div class="card-body">
-                                    <form role="form">
+                                    <form role="form" id="submit">
                                         <div class="mb-3">
-                                            <input type="email" class="form-control form-control-lg" placeholder="E-mail" aria-label="E-mail">
+                                            <input type="text" name="user" id="user" class="form-control form-control-lg" placeholder="Usuário" aria-label="Usuário">
                                         </div>
                                         <div class="mb-3">
-                                            <input type="senha" class="form-control form-control-lg" placeholder="Senha" aria-label="Senha">
+                                            <input type="password" name="senha" id="senha" class="form-control form-control-lg" placeholder="Senha" aria-label="Senha">
                                         </div>
                                         <div class="form-check form-switch">
                                             <input class="form-check-input" type="checkbox" id="rememberMe">
                                             <label class="form-check-label" for="rememberMe">Lembrar Me</label>
                                         </div>
                                         <div class="text-center">
-                                            <button type="button" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Acessar</button>
+                                            <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0">Acessar</button>
                                         </div>
                                     </form>
                                 </div>
@@ -112,5 +112,5 @@
     <!-- Github buttons -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-    <script src="<?= base_url('assets/js/argon-dashboard.min.js?v=2.0.2') ?>"></script>
+    <script src="<?= base_url('assets/js/argon-dashboard.min.js') ?>"></script>
 </body>

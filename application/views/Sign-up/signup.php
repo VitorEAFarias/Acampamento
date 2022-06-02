@@ -63,7 +63,7 @@
                             <div class="card-body">                            
                                 <form role="form">
                                     <div class="mb-3">
-                                        <input type="text" name="nome" class="form-control" placeholder="Nome" aria-label="Name">
+                                        <input type="text" name="usuario" class="form-control" placeholder="Usuario" aria-label="Name">
                                     </div>
                                     <div class="mb-3">
                                         <input type="email" name="email" class="form-control" placeholder="E-mail" aria-label="Email">

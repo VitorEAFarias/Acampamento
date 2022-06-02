@@ -13,15 +13,15 @@ class usuario_model extends CI_Model{
         $rst = (object)array('rst' => false, 'msg' => "");
         $data = (object)$this->input->post();
 
-        $dataAgora = date('Y-m-d');
+        $dataAgora = date('Y-m-d H:i:s');
 
         if($data)
         {
             if(isset($data->termosUso))
             {
-                $this->db->set("nome", $data->nome);
+                $this->db->set("usuario", $data->usuario);
                 $this->db->set("email", $data->email);
-                $this->db->set("nome", $data->nome);
+                $this->db->set("senha", $data->senha);
                 $this->db->set("data_cadastro", $dataAgora);
                 $this->db->set("ativo", 1);
 
