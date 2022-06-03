@@ -33,4 +33,10 @@ class Modalidades extends CI_Controller {
         $rst = $this->m_modalidade->getModalidades();
         echo json_encode($rst, JSON_UNESCAPED_UNICODE);
     }
+
+    public function cadastraModalidade()
+    {
+        $rst = $this->m_modalidade->CadastraModalidade();
+        echo json_encode($rst, JSON_UNESCAPED_UNICODE);
+    }
 }

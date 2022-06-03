@@ -14,38 +14,47 @@ class usuario_model extends CI_Model{
         $data = (object)$this->input->post();
 
         $dataAgora = date('Y-m-d H:i:s');
+        $existente = $this->db->get_where("usuarios", "usuario = $data->usuario || email = $data->email")->row();
 
-        if($data)
+        if(!$existente)
         {
-            if(isset($data->termosUso))
+            if($data)
             {
-                $this->db->set("usuario", $data->usuario);
-                $this->db->set("email", $data->email);
-                $this->db->set("senha", $data->senha);
-                $this->db->set("data_cadastro", $dataAgora);
-                $this->db->set("ativo", 1);
-
-                if($this->db->insert("usuarios"))
+                if(isset($data->termosUso))
                 {
-                    $rst->id = $this->db->insert_id();
-                    $rst->rst = true;
-                    $rst->msg = "Cadastro realizado com sucesso!!!";
+                    $this->db->set("usuario", $data->usuario);
+                    $this->db->set("email", $data->email);
+                    $this->db->set("senha", $data->senha);
+                    $this->db->set("data_cadastro", $dataAgora);
+                    $this->db->set("ativo", 1);
+
+                    if($this->db->insert("usuarios"))
+                    {
+                        $rst->id = $this->db->insert_id();
+                        $rst->rst = true;
+                        $rst->msg = "Cadastro realizado com sucesso!!!";
+                    }
+                    else
+                    {
+                        $rst->msg = "Erro ao efetuar cadastro";
+                    }            
                 }
                 else
                 {
-                    $rst->msg = "Erro ao efetuar cadastro";
-                }            
+                    $rst->rst = false;
+                    $rst->msg = "Para prosseguir é necessário aceitar os termos de uso";
+                }
             }
             else
             {
                 $rst->rst = false;
-                $rst->msg = "Para prosseguir é necessário aceitar os termos de uso";
+                $rst->msg = "È necessário preencher todos os campos";
             }
         }
         else
         {
             $rst->rst = false;
-            $rst->msg = "È necessário preencher todos os campos";
+            $rst->msg = "Usuário ou E-mail ja existe";
         }
 
         return $rst;        

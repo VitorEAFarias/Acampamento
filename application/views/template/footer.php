@@ -16,19 +16,25 @@
 <!--JQuery-->
 <script type="text/javascript" src="<?= base_url("assets/js/plugins/jquery/jquery.min.js") ?>"></script>
 
+<!--Datepicker-->
+<script src="<?= base_url('/assets/js/plugins/Datepicker/flatpickr.min.js') ?>"></script>
+
+<!--TimeLine-->
+<script src="<?= base_url('/assets/js/plugins/TimeLine/main.js') ?>"></script>
+
 <!-- DataTables -->
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/JSZip-2.5.0/jszip.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/pdfmake-0.1.36/pdfmake.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/pdfmake-0.1.36/vfs_fonts.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/DataTables-1.10.22/js/jquery.dataTables.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Buttons-1.6.5/js/dataTables.buttons.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Buttons-1.6.5/js/buttons.bootstrap4.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Buttons-1.6.5/js/buttons.colVis.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Buttons-1.6.5/js/buttons.html5.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Responsive-2.2.6/js/dataTables.responsive.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Responsive-2.2.6/js/responsive.bootstrap4.min.js") ?>"></script>
-<script type="text/javascript" src="<?= base_url("assets/js/DataTables/Select-1.3.1/js/dataTables.select.min.js") ?>"></script> 
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/JSZip-2.5.0/jszip.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/pdfmake-0.1.36/pdfmake.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/pdfmake-0.1.36/vfs_fonts.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/DataTables-1.10.22/js/jquery.dataTables.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/DataTables-1.10.22/js/dataTables.bootstrap4.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Buttons-1.6.5/js/dataTables.buttons.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Buttons-1.6.5/js/buttons.bootstrap4.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Buttons-1.6.5/js/buttons.colVis.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Buttons-1.6.5/js/buttons.html5.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Responsive-2.2.6/js/dataTables.responsive.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Responsive-2.2.6/js/responsive.bootstrap4.min.js") ?>"></script>
+<script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/Select-1.3.1/js/dataTables.select.min.js") ?>"></script> 
 
 <script>
     var BASE_URL = "<?= base_url()?>";
