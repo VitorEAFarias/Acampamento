@@ -60,16 +60,17 @@ class usuario_model extends CI_Model{
         return $rst;        
     }
 
-    public function getUser($id)
+    public function getUser($id = null)
     {
         if($id != null)
         {
-            $rst = $this->db->get_where("usuarios", "id = $id")->row();
-            return $rst;
+            $rst = $this->db->get_where("usuarios", "id = $id")->row();            
         }
         else
         {
-            return array();
+            $rst = $this->db->get("usuarios")->result();           
         }
+
+        return $rst;
     }
 }

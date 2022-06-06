@@ -29,6 +29,25 @@ class Usuarios extends CI_Controller {
 		$this->load->view("template/content", $this->data);
 	}
 
+	public function userIndex()
+	{	
+		$this->data["javascript"] = [
+            base_url("assets/js/Usuarios/usuarios.js")
+        ];	
+
+		$this->data["sidebar"] = $this->load->view("template/sidebar", null, true);
+		$this->data["content"] = $this->load->view("Usuarios/usuarios", $this->data, true);
+        $this->data["footer"] = $this->load->view("template/footer", $this->data, true);
+		
+		$this->load->view("template/content", $this->data);
+	}
+
+	public function getAllUsers()
+	{
+		$rst = $this->m_usuario->getUser();
+        echo json_encode($rst, JSON_UNESCAPED_UNICODE);
+	}
+
 	public function signup()
 	{
 		$this->data["javascript"] = [

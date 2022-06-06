@@ -13,7 +13,7 @@ class modalidades_model extends CI_Model{
         $rst = (object)array('rst' => false, 'msg' => "");
         $data = (object)$this->input->post();
 
-        $existente = $this->db->get_where("modalidades", "nome = $data->nomeModalidade")->row();
+        $existente = $this->db->get_where("modalidades", "nome = '$data->nomeModalidade'")->row();
         if(!$existente)
         {
             if($data->nomeModalidade && $data->dataOcorrer)

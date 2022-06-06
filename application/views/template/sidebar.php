@@ -36,11 +36,19 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="./pages/virtual-reality.html">
+                    <a class="nav-link " href="<?= base_url('Usuarios/userIndex') ?>">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-lock-circle-open text-info text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Usuários</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="<?= base_url('Usuarios/userIndex') ?>">
+                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="ni ni-user-run text-secondary text-sm opacity-10"></i>
+                        </div>
+                        <span class="nav-link-text ms-1">Participar</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -57,7 +65,7 @@
                 <li class="nav-item">
                     <a class="nav-link " href="<?= base_url('Usuarios/index')?>">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-single-02 text-info text-sm opacity-10"></i>
+                            <i class="ni ni-single-02 text-dark text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Perfil</span>
                     </a>

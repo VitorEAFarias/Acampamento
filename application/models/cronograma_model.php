@@ -7,4 +7,10 @@ class cronograma_model extends CI_Model{
     {
         parent::__construct();
     }
+
+    public function getCronograma()
+    {
+        $rst = $this->db->get_where("modalidades", "id > 0")->result();    
+        return $rst;
+    }
 }

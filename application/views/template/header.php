@@ -25,7 +25,7 @@
     <link href="<?= base_url('assets/css/flatpickr.min.css') ?>" rel="stylesheet" />
     <!--TimeLine-->
     <link href="<?= base_url('assets/css/TimeLine/style.css') ?>" rel="stylesheet" /> <!--https://codyhouse.co/gem/vertical-timeline/-->
-    <!--<link href="<?= base_url('assets/scss/TimeLine/style.scss') ?>" rel="stylesheet" />-->
+    <!--<link href="<?= base_url('assets/css/TimeLine/style.scss') ?>" rel="stylesheet" />-->
     <!--Datatable-->
     <link rel="stylesheet" type="text/css" href="<?= base_url("assets/js/plugins/DataTables/DataTables-1.10.22/css/dataTables.bootstrap4.min.css") ?>">
     <link rel="stylesheet" type="text/css" href="<?= base_url("assets/js/plugins/DataTables/Buttons-1.6.5/css/buttons.bootstrap4.min.css") ?>">

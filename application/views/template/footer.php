@@ -2,26 +2,19 @@
 <!--Core JS Files-->
 <script src="<?=base_url('assets/js/core/popper.min.js')?>"></script>
 <script src="<?=base_url("assets/js/core/bootstrap.min.js")?>"></script>
-
+<!--TimeLine-->
+<!-- <script src="<?= base_url('/assets/js/plugins/TimeLine/main.js') ?>"></script> -->
 <!--Scrollbars-->
 <script src="<?=base_url('assets/js/plugins/Scrollbar/perfect-scrollbar.min.js')?>"></script>
 <script src="<?=base_url('assets/js/plugins/Scrollbar/smooth-scrollbar.min.js')?>"></script>
-
 <!--Charts-->
 <script src="<?=base_url("assets/js/plugins/Charts/chartjs.min.js")?>"></script>
-
 <!--Sweetalert-->
 <script src="<?=base_url("assets/js/plugins/sweetalert2/sweetalert2.min.js") ?>"></script>
-
 <!--JQuery-->
 <script type="text/javascript" src="<?= base_url("assets/js/plugins/jquery/jquery.min.js") ?>"></script>
-
 <!--Datepicker-->
 <script src="<?= base_url('/assets/js/plugins/Datepicker/flatpickr.min.js') ?>"></script>
-
-<!--TimeLine-->
-<script src="<?= base_url('/assets/js/plugins/TimeLine/main.js') ?>"></script>
-
 <!-- DataTables -->
 <script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/JSZip-2.5.0/jszip.min.js") ?>"></script>
 <script type="text/javascript" src="<?= base_url("assets/js/plugins/DataTables/pdfmake-0.1.36/pdfmake.min.js") ?>"></script>
@@ -48,8 +41,6 @@
 </script>
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
-<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-<script src="<?= base_url('assets/js/argon-dashboard.min.js') ?>"></script>
 
 <?php 
 if(isset($javascript)): 
@@ -58,5 +49,8 @@ if(isset($javascript)):
     endforeach;
 endif;
 ?>
+
+<!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="<?= base_url('assets/js/argon-dashboard.min.js?v=2.0.2') ?>"></script>
 </body>
 </html>

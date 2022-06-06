@@ -46,16 +46,17 @@
 	var verticalTimelines = document.getElementsByClassName("js-cd-timeline"),
 		verticalTimelinesArray = [],
 		scrolling = false;
+		console.log(verticalTimelines)
 	if( verticalTimelines.length > 0 ) {
 		for( var i = 0; i < verticalTimelines.length; i++) {
 			(function(i){
 				verticalTimelinesArray.push(new VerticalTimeline(verticalTimelines[i]));
-			})(i);
+			})(i);			
 		}
-
+		console.log(verticalTimelinesArray)
 		//show timeline blocks on scrolling
 		window.addEventListener("scroll", function(event) {
-			if( !scrolling ) {
+			if( !scrolling ) {				
 				scrolling = true;
 				(!window.requestAnimationFrame) ? setTimeout(checkTimelineScroll, 250) : window.requestAnimationFrame(checkTimelineScroll);
 			}
@@ -68,4 +69,8 @@
 		});
 		scrolling = false;
 	};
+
+	window.addEventListener('scroll',(event) => {
+		console.log('Scrolling...');
+	});
 })();
