@@ -30,7 +30,7 @@ namespace ControleEPI.BLL
 
         public async Task<ProdutosDTO> getNomeProduto(string nome)
         {
-            return await _context.produtos.FromSqlRaw("SELECT * FROM produtos where nome = '"+nome+"'").FirstOrDefaultAsync();
+            return await _context.produtos.FromSqlRaw("SELECT * FROM produtos where nome = '" + nome + "'").FirstOrDefaultAsync();
         }
 
         public async Task<ProdutosDTO> getFornecedorProduto(int IdFornecedor)
@@ -41,6 +41,11 @@ namespace ControleEPI.BLL
         public async Task<ProdutosDTO> getCategoriaProduto(int IdCategoria)
         {
             return await _context.produtos.FromSqlRaw("SELECT * FROM produtos where idCategoria = '" + IdCategoria + "'").FirstOrDefaultAsync();
+        }
+
+        public async Task<IEnumerable<ProdutosDTO>> getCategoriaProdutos(int IdCategoria)
+        {
+            return await _context.produtos.FromSqlRaw("SELECT * FROM produtos where idCategoria = '" + IdCategoria + "'").ToListAsync();
         }
 
         public async Task<ProdutosDTO> getProduto(int Id)

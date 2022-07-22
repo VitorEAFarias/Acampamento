@@ -130,6 +130,65 @@ namespace ApiSMT.Controllers.ControllersEPI
         }
 
         /// <summary>
+        /// Seleciona os produto ao qual fazem parte de uma categoria especifica
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
+        [HttpGet("categoria/{idCategoria}")]
+        public async Task<ActionResult<ProdutosDTO>> GetProdutoCategoria([FromRoute] int idCategoria)
+        {
+            try
+            {
+                List<object> listaProdutos = new List<object>();
+
+                if (!idCategoria.Equals(""))
+                {
+                    var produto = await _produtos.getCategoriaProdutos(idCategoria);
+
+                    if (!produto.Equals(""))
+                    {
+                        foreach(var item in produto)
+                        {
+                            var fornecedor = await _fornecedor.getFornecedor(item.idFornecedor);
+
+                            if (!fornecedor.Equals(""))
+                            {
+                                var categoria = await _categoria.getCategoria(item.idCategoria);
+
+                                if (!categoria.Equals(""))
+                                {
+                                    listaProdutos.Add(new {
+                                        item.id,
+                                        item.nome,
+                                        item.ca,
+                                        item.quantidade,
+                                        item.valor,
+                                        fornecedor = fornecedor.nome
+                                    });
+
+                                }
+                            }
+                        }
+
+                        return Ok(new { message = "Produto encontrado", lista = listaProdutos, result = true });
+                    }
+                    else
+                    {
+                        return BadRequest(new { message = "Produto não encontrado", result = false });
+                    }
+                }
+                else
+                {
+                    return BadRequest(new { message = "Nenhum produto selecionado", result = false });
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Insere um novo produto na tabela enviando por parametro o id do usuario que inseriu
         /// </summary>
         /// <param name="id"></param>

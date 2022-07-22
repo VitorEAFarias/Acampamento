@@ -85,6 +85,50 @@
             Classe que manipula as informações relacionadas a compras de produtos
             </summary>
         </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.ComprasController.#ctor(ControleEPI.DAL.IComprasDAL)">
+            <summary>
+            Construtor ComprasController
+            </summary>
+            <param name="compras"></param>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.ComprasController.getFornecedores">
+            <summary>
+            Lista todas as compras
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.ComprasController.getCompra(System.Int32)">
+            <summary>
+            Seleciona uma compra
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.ComprasController.getStatusCompras(System.Int32)">
+            <summary>
+            Seleciona compras por status
+            </summary>
+            <param name="idStatus"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiSMT.Controllers.ControllersEPI.EmailController">
+            <summary>
+            Classe que encia e-mail
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.EmailController.#ctor(ControleEPI.DAL.IMailServiceDAL)">
+            <summary>
+            Construtor EmailController
+            </summary>
+            <param name="mailService"></param>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.EmailController.SendMail(ControleEPI.DTO.E_Mail.EmailRequestDTO)">
+            <summary>
+            Post para enviar e-mail
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:ApiSMT.Controllers.ControllersEPI.EpiVinculoController">
             <summary>
             Classe de manipulação de epi's vinculados ao colaborador
@@ -177,17 +221,41 @@
             <param name="fornecedor"></param>
             <returns></returns>
         </member>
+        <member name="T:ApiSMT.Controllers.ControllersEPI.Extensions">
+            <summary>
+            Classe para identificar usuarios administradores
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.Extensions.findIndex``1(``0[],``0)">
+            <summary>
+            Função array
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="array"></param>
+            <param name="item"></param>
+            <returns></returns>
+        </member>
         <member name="T:ApiSMT.Controllers.ControllersEPI.LoginController">
             <summary>
             Classe de login do sistema
             </summary>
         </member>
-        <member name="M:ApiSMT.Controllers.ControllersEPI.LoginController.#ctor(ControleEPI.DAL.IConUserDAL,Microsoft.Extensions.Configuration.IConfiguration)">
+        <member name="M:ApiSMT.Controllers.ControllersEPI.LoginController.#ctor(ControleEPI.DAL.IConUserDAL,Microsoft.Extensions.Configuration.IConfiguration,ControleEPI.DAL.IDepartamentosDAL,ControleEPI.DAL.IEmpContratosDAL,ApiSMT.Utilitários.JWT.ITokenService)">
             <summary>
             Construtor LoginController
             </summary>
             <param name="conuser"></param>
             <param name="config"></param>
+            <param name="departamento"></param>
+            <param name="contrato"></param>
+            <param name="tokenService"></param>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.LoginController.MainWindow(System.String)">
+            <summary>
+            Renova o token de acesso
+            </summary>
+            <param name="token"></param>
+            <returns></returns>       
         </member>
         <member name="M:ApiSMT.Controllers.ControllersEPI.LoginController.login(ControleEPI.DTO.FromBody.LoginDTO)">
             <summary>
@@ -196,23 +264,56 @@
             <param name="login"></param>
             <returns></returns>
         </member>
+        <member name="T:ApiSMT.Controllers.ControllersEPI.MotivosController">
+            <summary>
+            Classe de manipulação de motivos de pedidos de epi's
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.MotivosController.#ctor(ControleEPI.DAL.IMotivosDAL)">
+            <summary>
+            Construtor MotivosController
+            </summary>
+            <param name="motivo"></param>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.MotivosController.getMotivos">
+            <summary>
+            Lista todos os motivos
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.MotivosController.getMotivo(System.Int32)">
+            <summary>
+            Seleciona um motivo
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:ApiSMT.Controllers.ControllersEPI.PedidosController">
             <summary>
             Classe de manipulação de pedidos de epi's
             </summary>
         </member>
-        <member name="M:ApiSMT.Controllers.ControllersEPI.PedidosController.#ctor(ControleEPI.DAL.IPedidosDAL,ControleEPI.DAL.IStatusDAL)">
+        <member name="M:ApiSMT.Controllers.ControllersEPI.PedidosController.#ctor(ControleEPI.DAL.IPedidosDAL,ControleEPI.DAL.IStatusDAL,ControleEPI.DAL.IMotivosDAL,ControleEPI.DAL.IConUserDAL)">
             <summary>
             Construtor PedidosController
             </summary>
             <param name="pedidos"></param>
             <param name="status"></param>
+            <param name="motivos"></param>
+            <param name="conUser"></param>
         </member>
         <member name="M:ApiSMT.Controllers.ControllersEPI.PedidosController.insertPedido(ControleEPI.DTO.PedidosDTO)">
             <summary>
             insere um pedido a ser feito
             </summary>
             <param name="pedido"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.PedidosController.getPedidosUsuario(System.Int32)">
+            <summary>
+            Seleciona os produto ao qual fazem parte de uma categoria especifica
+            </summary>
+            <param name="idUsuario"></param>
             <returns></returns>
         </member>
         <member name="M:ApiSMT.Controllers.ControllersEPI.PedidosController.getStatus(System.Int32)">
@@ -268,6 +369,13 @@
             Seleciona um produto ao qual é recebido um id em especifico por parametro
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Controllers.ControllersEPI.ProdutosController.GetProdutoCategoria(System.Int32)">
+            <summary>
+            Seleciona os produto ao qual fazem parte de uma categoria especifica
+            </summary>
+            <param name="idCategoria"></param>
             <returns></returns>
         </member>
         <member name="M:ApiSMT.Controllers.ControllersEPI.ProdutosController.PostProduto(System.Int32,ControleEPI.DTO.ProdutosDTO)">
@@ -349,6 +457,25 @@
             <param name="app"></param>
             <param name="env"></param>
         </member>
+        <member name="T:ApiSMT.Utilitários.EncryptDecrypt">
+            <summary>
+            Classe de criptografia
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Utilitários.EncryptDecrypt.Encrypt(System.String)">
+            <summary>
+            Função Encrypt
+            </summary>
+            <param name="clearText"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Utilitários.EncryptDecrypt.Decrypt(System.String)">
+            <summary>
+            Função Decrypt
+            </summary>
+            <param name="cipherText"></param>
+            <returns></returns>
+        </member>
         <member name="T:ApiSMT.Utilitários.GerarMD5">
             <summary>
             Classe que gera criptografia MD5
@@ -359,6 +486,78 @@
             Função que converte o valor digitado para criptografia MD5
             </summary>
             <param name="valor"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiSMT.Utilitários.JWT.ITokenService">
+            <summary>
+            Interface repositorio de token
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Utilitários.JWT.ITokenService.BuildToken(System.String,System.String,System.String)">
+            <summary>
+            Cria token
+            </summary>
+            <param name="key"></param>
+            <param name="issuer"></param>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Utilitários.JWT.ITokenService.IsTokenValid(System.String,System.String,System.String)">
+            <summary>
+            Verifica validade do token
+            </summary>
+            <param name="key"></param>
+            <param name="issuer"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiSMT.Utilitários.JWT.TokenService">
+            <summary>
+            Classe TokenService
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Utilitários.JWT.TokenService.BuildToken(System.String,System.String,System.String)">
+            <summary>
+            Função cria token
+            </summary>
+            <param name="key"></param>
+            <param name="issuer"></param>
+            <param name="usuario"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Utilitários.JWT.TokenService.IsTokenValid(System.String,System.String,System.String)">
+            <summary>
+            Função verifica validade do token
+            </summary>
+            <param name="key"></param>
+            <param name="issuer"></param>
+            <param name="token"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ApiSMT.Utilitários.JWT.TokenService.BuildMessage(System.String,System.Int32)">
+            <summary>
+            Constrói a mensagem que mostra o token
+            </summary>
+            <param name="stringToSplit"></param>
+            <param name="chunkSize"></param>
+            <returns></returns>
+        </member>
+        <member name="T:ApiSMT.Utilitários.MailService">
+            <summary>
+            Classe de envio de e-mail
+            </summary>
+        </member>
+        <member name="M:ApiSMT.Utilitários.MailService.#ctor(Microsoft.Extensions.Options.IOptions{ControleEPI.DTO.E_Mail.EmailSettingsDTO})">
+            <summary>
+            Construtor MailService
+            </summary>
+            <param name="emailSettings"></param>
+        </member>
+        <member name="M:ApiSMT.Utilitários.MailService.SendEmailAsync(ControleEPI.DTO.E_Mail.EmailRequestDTO)">
+            <summary>
+            Função para enviar e-mail
+            </summary>
+            <param name="mailRequest"></param>
             <returns></returns>
         </member>
         <member name="T:ApiSMT.Utilitários.TimerHostedService">

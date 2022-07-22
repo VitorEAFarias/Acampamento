@@ -12,11 +12,11 @@ using ApiSMT.Utilitários;
 using System.Reflection;
 using System.IO;
 using System;
-using Microsoft.AspNetCore.Mvc;
-using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ApiSMT.Utilitários.JWT;
+using ControleEPI.DTO.E_Mail;
 
 namespace ApiSMT
 {
@@ -55,19 +55,21 @@ namespace ApiSMT
                          ValidateAudience = true,
                          ValidateLifetime = true,
                          ValidateIssuerSigningKey = true,
-
                          ValidIssuer = Configuration["Jwt:Issuer"],
-                         ValidAudience = Configuration["Jwt:Audience"],
-                         IssuerSigningKey = new SymmetricSecurityKey
-                       (Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                         ValidAudience = Configuration["Jwt:Issuer"],
+                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
                      };
                  });
+
+            services.AddTransient<ITokenService, TokenService>();
 
             string SMTConnection = Configuration.GetConnectionString("smt");
             string RHConnection = Configuration.GetConnectionString("rh");
             
             services.AddDbContextPool<AppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection)));
             services.AddDbContextPool<AppDbContextRH>(options => options.UseMySql(RHConnection, ServerVersion.AutoDetect(RHConnection)));
+
+            services.Configure<EmailSettingsDTO>(Configuration.GetSection("EmailSettings"));
 
             //EPI
             services.AddScoped<ICategoriasDAL, CategoriaBLL>();
@@ -84,6 +86,8 @@ namespace ApiSMT
             services.AddScoped<IEmpContratosDAL, EmpContratosBLL>();
             services.AddScoped<ICargosDAL, CargosBLL>();
             services.AddScoped<IDepartamentosDAL, DepartamentosBLL>();
+            services.AddScoped<IComprasDAL, ComprasBLL>();
+            services.AddTransient<IMailServiceDAL, MailService>();
             //---
 
             services.AddControllers();            

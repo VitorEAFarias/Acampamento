@@ -9,5 +9,6 @@ namespace ControleEPI.DTO
         public string produto { get; set; }
         public DateTime? dataVinculo { get; set; }
         public bool ativo { get; set; }
+        public string token { get; set; }
     }
 }

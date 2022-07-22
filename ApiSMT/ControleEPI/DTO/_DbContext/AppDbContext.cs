@@ -25,5 +25,6 @@ namespace ControleEPI.DTO._DbContext
         public DbSet<ProdutosDTO> produtos { get; set; }
         public DbSet<StatusDTO> status { get; set; }
         public DbSet<LogEstoqueDTO> logEstoque { get; set; }
+        public DbSet<ComprasDTO> compras { get; set; }
     }
 }

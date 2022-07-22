@@ -9,6 +9,7 @@ namespace ControleEPI.DAL
         Task<PedidosDTO> Insert(PedidosDTO pedido);
         Task<PedidosDTO> getPedido(int Id);
         Task<IList<PedidosDTO>> getPedidos();
+        Task<IList<PedidosDTO>> getPedidosUsuario(int Id);
         Task Update(PedidosDTO pedido);
         Task Delete(int id);
     }

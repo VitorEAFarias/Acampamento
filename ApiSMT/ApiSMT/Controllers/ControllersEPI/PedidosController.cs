@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ControleEPI.DAL;
 using ControleEPI.DTO;
@@ -15,16 +16,22 @@ namespace ApiSMT.Controllers.ControllersEPI
     {
         private readonly IPedidosDAL _pedidos;
         private readonly IStatusDAL _status;
+        private readonly IMotivosDAL _motivos;
+        private readonly IConUserDAL _conUser;
 
         /// <summary>
         /// Construtor PedidosController
         /// </summary>
         /// <param name="pedidos"></param>
         /// <param name="status"></param>
-        public PedidosController(IPedidosDAL pedidos, IStatusDAL status)
+        /// <param name="motivos"></param>
+        /// <param name="conUser"></param>
+        public PedidosController(IPedidosDAL pedidos, IStatusDAL status, IMotivosDAL motivos, IConUserDAL conUser)
         {
             _pedidos = pedidos;
             _status = status;
+            _motivos = motivos;
+            _conUser = conUser;
         }
 
         /// <summary>
@@ -41,7 +48,7 @@ namespace ApiSMT.Controllers.ControllersEPI
                 {
                     var Pedidos = new PedidosDTO();
 
-                    Pedidos.data = DateTime.Now;
+                    Pedidos.data = pedido.data;
                     Pedidos.idUsuario = pedido.idUsuario;
                     Pedidos.descricao = pedido.descricao;
                     Pedidos.motivo = pedido.motivo;
@@ -50,17 +57,59 @@ namespace ApiSMT.Controllers.ControllersEPI
 
                     var novoPedido = await _pedidos.Insert(Pedidos);
 
-                    return Ok(new { message = "Fornecedor inserido com sucesso!!!", data = true });
+                    return Ok(new { message = "Pedido realizado com sucesso!!!", result = true, data = novoPedido });
                 }
                 else
                 {
-                    return BadRequest(new { message = "Produtos não encontrados", data = false});   
+                    return BadRequest(new { message = "Produtos não encontrados", result = false});   
                 }                  
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }        
+        }
+
+        /// <summary>
+        /// Seleciona os produto ao qual fazem parte de uma categoria especifica
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
+        [HttpGet("usuario/{idUsuario}")]
+        public async Task<ActionResult<ProdutosDTO>> getPedidosUsuario([FromRoute] int idUsuario)
+        {
+            try
+            {
+                List<object> listaPedidos = new List<object>();
+
+                var pedidos = await _pedidos.getPedidosUsuario(idUsuario);
+
+                foreach(var item in pedidos)
+                {
+                    var motivo = await _motivos.getMotivo(item.motivo);
+                    var status = await _status.getStatus(item.idStatus);
+                    var usuario = await _conUser.GetEmp(item.idUsuario);
+
+                    listaPedidos.Add(new
+                    {
+                        item.id,
+                        item.data,
+                        item.descricao,
+                        item.produtos,
+                        motivo = motivo.nome,
+                        status = status.nome,
+                        usuario = usuario.nome
+                    });
+
+                }
+
+                return Ok(new { message = "Lista de pedidos encontrado", lista = pedidos, result = true });
+
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -77,11 +126,11 @@ namespace ApiSMT.Controllers.ControllersEPI
                 {
                     var status = await _status.getStatus(id);
 
-                    return Ok(new { message = "Status encontrado", status = status.nome, data = true });
+                    return Ok(new { message = "Status encontrado", status = status.nome, result = true });
                 }
                 else
                 {
-                    return BadRequest(new { message = "Nenhum status selecionado", data = false });
+                    return BadRequest(new { message = "Nenhum status selecionado", result = false });
                 }
             }
             catch (Exception ex)
@@ -103,11 +152,11 @@ namespace ApiSMT.Controllers.ControllersEPI
 
                 if (todosStatus != null)
                 {
-                    return Ok(new { message = "Lista encontrada", data = true, lista = todosStatus });
+                    return Ok(new { message = "Lista encontrada", result = true, lista = todosStatus });
                 }
                 else
                 {
-                    return BadRequest(new { message = "Nenhum statuso encontrado", data = false });
+                    return BadRequest(new { message = "Nenhum statuso encontrado", result = false });
                 }
             }
             catch (Exception ex)
@@ -127,7 +176,7 @@ namespace ApiSMT.Controllers.ControllersEPI
             {
                 var pedidos = await _pedidos.getPedidos();
 
-                return Ok( new { message = "lista encontrada", data = true, lista = pedidos });
+                return Ok( new { message = "lista encontrada", result = true, lista = pedidos });
             }
             catch (Exception ex)
             {

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControleEPI.DTO;
-using System.Threading;
 
 namespace ControleEPI.DAL
 {

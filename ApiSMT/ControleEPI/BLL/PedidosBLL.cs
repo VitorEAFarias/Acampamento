@@ -28,6 +28,11 @@ namespace ControleEPI.BLL
             return await _context.pedidos.ToListAsync();            
         }
 
+        public async Task<IList<PedidosDTO>> getPedidosUsuario(int id)
+        {
+            return await _context.pedidos.FromSqlRaw("SELECT * FROM pedidos where idUsuario = '" + id + "'").ToListAsync();
+        }
+
         public async Task<PedidosDTO> getPedido(int Id)
         {
             return await _context.pedidos.FindAsync(Id);

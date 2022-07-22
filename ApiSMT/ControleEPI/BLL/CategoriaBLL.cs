@@ -10,10 +10,12 @@ namespace ControleEPI.BLL
     public class CategoriaBLL : ICategoriasDAL
     {
         public readonly AppDbContext _context;
+
         public CategoriaBLL(AppDbContext context)
         {
             _context = context;
         }
+
         public async Task Delete(int Id)
         {
             var categoriaDelete = await _context.categoria.FindAsync(Id);

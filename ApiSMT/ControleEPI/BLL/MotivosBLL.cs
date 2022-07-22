@@ -23,12 +23,12 @@ namespace ControleEPI.BLL
             return motivo;
         }        
 
-        public async Task<IEnumerable<MotivoDTO>> Get()
+        public async Task<IEnumerable<MotivoDTO>> getMotivos()
         {
             return await _context.motivos.ToListAsync();
         }
 
-        public async Task<MotivoDTO> Get(int Id)
+        public async Task<MotivoDTO> getMotivo(int Id)
         {
             return await _context.motivos.FindAsync(Id);
         }        

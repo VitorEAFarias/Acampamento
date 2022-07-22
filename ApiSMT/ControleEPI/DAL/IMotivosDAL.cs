@@ -6,8 +6,8 @@ namespace ControleEPI.DAL
 {
     public interface IMotivosDAL
     {
-        Task<IEnumerable<MotivoDTO>> Get();
-        Task<MotivoDTO> Get(int Id);
+        Task<IEnumerable<MotivoDTO>> getMotivos();
+        Task<MotivoDTO> getMotivo(int Id);
         Task<MotivoDTO> Insert(MotivoDTO motivo);
         Task Update(MotivoDTO motivo);
         Task Delete(int Id);

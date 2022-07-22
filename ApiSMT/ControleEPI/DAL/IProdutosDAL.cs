@@ -9,6 +9,7 @@ namespace ControleEPI.DAL
         Task<IEnumerable<ProdutosDTO>> getProdutos();
         Task<ProdutosDTO> getProduto(int Id);
         Task<ProdutosDTO> getCategoriaProduto(int IdCategoria);
+        Task<IEnumerable<ProdutosDTO>> getCategoriaProdutos(int IdCategoria);
         Task<ProdutosDTO> getFornecedorProduto(int IdFornecedor);
         Task<ProdutosDTO> getNomeProduto(string nome);
         Task<ProdutosDTO> Insert(ProdutosDTO produtos);

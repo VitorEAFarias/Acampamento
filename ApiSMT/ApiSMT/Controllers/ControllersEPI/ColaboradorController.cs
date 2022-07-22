@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ControleEPI.DTO;
 using ControleEPI.DAL;
 using System.Collections.Generic;
 
@@ -88,7 +87,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}")]
-        public async Task<ActionResult<object>> GetColaborador(int id)
+        public async Task<IActionResult> GetColaborador(int id)
         {
             try
             {

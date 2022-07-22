@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace ControleEPI.DTO
+﻿namespace ControleEPI.DTO
 {
     public class EmpregadoDTO
     {
