@@ -7,6 +7,9 @@ using Microsoft.OpenApi.Models;
 using ControleEPI.DTO._DbContext;
 using ControleEPI.DAL;
 using ControleEPI.BLL;
+using Vestimenta.DTO._DbContext;
+using Vestimenta.DAL;
+using Vestimenta.BLL;
 using Microsoft.EntityFrameworkCore;
 using ApiSMT.Utilitários;
 using System.Reflection;
@@ -45,21 +48,18 @@ namespace ApiSMT
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication
-                 (JwtBearerDefaults.AuthenticationScheme)
-                 .AddJwtBearer(options =>
-                 {
-                     options.TokenValidationParameters = new TokenValidationParameters
-                     {
-                         ValidateIssuer = true,
-                         ValidateAudience = true,
-                         ValidateLifetime = true,
-                         ValidateIssuerSigningKey = true,
-                         ValidIssuer = Configuration["Jwt:Issuer"],
-                         ValidAudience = Configuration["Jwt:Issuer"],
-                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
-                     };
-                 });
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options => {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = Configuration["Jwt:Issuer"],
+                    ValidAudience = Configuration["Jwt:Issuer"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"]))
+                };
+            });
 
             services.AddTransient<ITokenService, TokenService>();
 
@@ -68,29 +68,41 @@ namespace ApiSMT
             
             services.AddDbContextPool<AppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection)));
             services.AddDbContextPool<AppDbContextRH>(options => options.UseMySql(RHConnection, ServerVersion.AutoDetect(RHConnection)));
+            services.AddDbContextPool<VestAppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection)));
 
             services.Configure<EmailSettingsDTO>(Configuration.GetSection("EmailSettings"));
 
             //EPI
-            services.AddScoped<ICategoriasDAL, CategoriaBLL>();
-            services.AddScoped<IConUserDAL, ConUserBLL>();
-            services.AddScoped<IEpiVinculoDAL, EpiVinculoBLL>();
-            services.AddScoped<IMotivosDAL, MotivosBLL>();
-            services.AddScoped<IPedidosDAL, PedidosBLL>();
-            services.AddScoped<IPedidosStatusDAL, PedidosStatusBLL>();
-            services.AddScoped<IProdutosDAL, ProdutosBLL>();
-            services.AddScoped<IStatusDAL, StatusBLL>();
-            services.AddScoped<IFornecedoresDAL, FornecedorBLL>();
-            services.AddScoped<IEpiVinculoDAL, EpiVinculoBLL>();
-            services.AddScoped<ILogEstoqueDAL, LogEstoqueBLL>();
-            services.AddScoped<IEmpContratosDAL, EmpContratosBLL>();
-            services.AddScoped<ICargosDAL, CargosBLL>();
-            services.AddScoped<IDepartamentosDAL, DepartamentosBLL>();
-            services.AddScoped<IComprasDAL, ComprasBLL>();
-            services.AddTransient<IMailServiceDAL, MailService>();
-            //---
+            services.AddScoped<ICategoriasBLL, CategoriaDAL>();
+            services.AddScoped<IConUserBLL, ConUserDAL>();
+            services.AddScoped<IEpiVinculoBLL, EpiVinculoDAL>();
+            services.AddScoped<IMotivosBLL, MotivosDAL>();
+            services.AddScoped<IPedidosBLL, PedidosDAL>();
+            services.AddScoped<IPedidosStatusBLL, PedidosStatusDAL>();
+            services.AddScoped<IProdutosBLL, ProdutosDAL>();
+            services.AddScoped<IStatusBLL, StatusDAL>();
+            services.AddScoped<IFornecedoresBLL, FornecedorDAL>();
+            services.AddScoped<IEpiVinculoBLL, EpiVinculoDAL>();
+            services.AddScoped<ILogEstoqueBLL, LogEstoqueDAL>();
+            services.AddScoped<IEmpContratosBLL, EmpContratosDAL>();
+            services.AddScoped<ICargosBLL, CargosDAL>();
+            services.AddScoped<IDepartamentosBLL, DepartamentosDAL>();
+            services.AddScoped<IComprasBLL, ComprasDAL>();
+            services.AddScoped<IItensBLL, ItensDAL>();
+            services.AddTransient<IMailServiceBLL, MailService>();
 
-            services.AddControllers();            
+            //Vestimenta
+            services.AddScoped<IVestimentaBLL, VestimentaDAL>();
+            services.AddScoped<IComprasVestBLL, ComprasVestDAL>();
+            services.AddScoped<IStatusVestBLL, StatusVestDAL>();
+            services.AddScoped<IPedidosVestBLL, PedidosVestDAL>();
+            services.AddScoped<IEstoqueBLL, EstoqueDAL>();
+            services.AddScoped<ILogBLL, LogDAL>();
+            services.AddScoped<IVestVinculoBLL, VestVinculoDAL>();
+            services.AddScoped<IVestRepositorioBLL, VestRepositorioDAL>();
+            services.AddScoped<IVestItemVinculoBLL, VestItemVinculoDAL>();
+
+            services.AddControllers();
             services.AddHostedService<TimerHostedService>();
 
             services.AddCors(options =>
@@ -114,18 +126,18 @@ namespace ApiSMT
                     In = ParameterLocation.Header,
                     Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer'[space] and then your token in the text input below. \r\n\r\nExample: \"Bearer 12345abcdef\"",
                 });
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement {
                     {
-                          new OpenApiSecurityScheme
-                          {
-                              Reference = new OpenApiReference
-                              {
-                                  Type = ReferenceType.SecurityScheme,
-                                  Id = "Bearer"
-                              }
-                          },
-                         new string[] {}
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[] {}
                     }
                 });
 
@@ -149,9 +161,11 @@ namespace ApiSMT
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiSMT v1"));
             }
+            else
+            {
+                //app.UseHttpsRedirection();
+            }
 
-            //app.UseHttpsRedirection();
-            
             app.UseAuthentication();
 
             app.UseRouting();

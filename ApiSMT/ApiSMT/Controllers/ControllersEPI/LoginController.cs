@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using ControleEPI.DTO.FromBody;
 using ApiSMT.Utilitários;
 using System;
@@ -35,15 +35,15 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class LoginController : ControllerBase
     {
-        private readonly IConUserDAL _conuser;
+        private readonly IConUserBLL _conuser;
         private readonly IConfiguration _config;
-        private readonly IDepartamentosDAL _departamento;
-        private readonly IEmpContratosDAL _contrato;
+        private readonly IDepartamentosBLL _departamento;
+        private readonly IEmpContratosBLL _contrato;
         private readonly ITokenService _tokenService;
 
         private string generatedToken = null;
 
-        int[] array = { 34, 29, 47, 35, 13 }; 
+        int[] array = { 34, 29, 47, 35, 13  }; 
 
         /// <summary>
         /// Construtor LoginController
@@ -53,7 +53,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="departamento"></param>
         /// <param name="contrato"></param>
         /// <param name="tokenService"></param>
-        public LoginController(IConUserDAL conuser, IConfiguration config, IDepartamentosDAL departamento, IEmpContratosDAL contrato, ITokenService tokenService)
+        public LoginController(IConUserBLL conuser, IConfiguration config, IDepartamentosBLL departamento, IEmpContratosBLL contrato, ITokenService tokenService)
         {
             _conuser = conuser;
             _config = config;
@@ -102,6 +102,7 @@ namespace ApiSMT.Controllers.ControllersEPI
             string email = "";
             int id = 0;
             bool adm = false;
+            bool comprador = false;
 
             foreach (var item in doc)
             {
@@ -115,29 +116,38 @@ namespace ApiSMT.Controllers.ControllersEPI
                         var empregado = await _conuser.GetEmp(senhas.id_empregado);
                         var emailCorp = await _conuser.GetEmpCont(item.id_empregado);
                         var contrato = await _contrato.getEmpContrato(item.id_empregado);
-                        var departamento = await _departamento.getDepartamento(contrato.id_departamento);
 
-                        usuario = empregado.nome;
-                        id = empregado.id;
-                        email = emailCorp.valor;
-
-                        GerarMD5 md5 = new GerarMD5();
-
-                        var senhaMD5 = md5.GeraMD5(login.Senha);
-
-                        if (senhas.senha == senhaMD5)
+                        if (contrato != null)
                         {
-                            senha = senhas.senha;
+                            var departamento = await _departamento.getDepartamento(contrato.id_departamento);
 
-                            int index = array.findIndex(departamento.id);
+                            usuario = empregado.nome;
+                            id = empregado.id;
+                            email = emailCorp.valor;
 
-                            if (index != -1)
+                            GerarMD5 md5 = new GerarMD5();
+
+                            var senhaMD5 = md5.GeraMD5(login.Senha);
+
+                            if (senhas.senha == senhaMD5)
                             {
-                                adm = true;
-                            }
+                                senha = senhas.senha;
 
-                            break;                           
-                        }
+                                int index = array.findIndex(departamento.id);
+
+                                if (index != -1)
+                                {
+                                    adm = true;
+                                }
+
+                                if (departamento.titulo == "COMPRAS")
+                                {
+                                    comprador = true;
+                                }
+
+                                break;
+                            }
+                        }                        
                     }
                 }
             }
@@ -150,7 +160,7 @@ namespace ApiSMT.Controllers.ControllersEPI
 
                     if (generatedToken != null)
                     {
-                        return Ok(new { id = id, nome = usuario, email = email, data = true, message = usuario + " Logado com sucesso!!!", Token = generatedToken, adm = adm });
+                        return Ok(new { id = id, nome = usuario, email = email, data = true, message = usuario + " Logado com sucesso!!!", Token = generatedToken, adm = adm, compras = comprador });
                     }
                     else
                     {

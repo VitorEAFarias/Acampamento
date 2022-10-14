@@ -15,6 +15,7 @@ namespace ControleEPI.DTO.FromBody
         }
 
         public int usuario { get; set; }
+        public int usuarioLogado { get; set; }
         [JsonField]
         public IList<ProdutoVinculo> produto { get; set; }
 

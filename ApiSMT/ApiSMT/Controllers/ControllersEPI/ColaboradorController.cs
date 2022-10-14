@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using System.Collections.Generic;
 
 namespace ApiSMT.Controllers.ControllersEPI
@@ -12,10 +12,10 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class ColaboradorController : ControllerBase
     {
-        private readonly IEmpContratosDAL _contrato;
-        private readonly IConUserDAL _usuario;
-        private readonly IDepartamentosDAL _departamento;
-        private readonly ICargosDAL _cargo;
+        private readonly IEmpContratosBLL _contrato;
+        private readonly IConUserBLL _usuario;
+        private readonly IDepartamentosBLL _departamento;
+        private readonly ICargosBLL _cargo;
 
         /// <summary>
         /// Construtor ColaboradorController
@@ -24,7 +24,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="contrato"></param>
         /// <param name="departamento"></param>
         /// <param name="cargo"></param>
-        public ColaboradorController(IConUserDAL usuario, IEmpContratosDAL contrato, IDepartamentosDAL departamento, ICargosDAL cargo)
+        public ColaboradorController(IConUserBLL usuario, IEmpContratosBLL contrato, IDepartamentosBLL departamento, ICargosBLL cargo)
         {
             _usuario = usuario;
             _contrato = contrato;
@@ -60,12 +60,10 @@ namespace ApiSMT.Controllers.ControllersEPI
                             {
                                 idColaborador = item.id,
                                 nome = item.nome,
-                                matricula = item.matricula,
                                 departamento = departamentoColaborador.titulo,
                                 cargo = cargoColaborador.titulo
                             });
-                        }
-                        
+                        }                        
                     }
 
                     return Ok(new { message = "Lista encontrada", lista = listaColaboradores, result = true });
@@ -105,7 +103,6 @@ namespace ApiSMT.Controllers.ControllersEPI
                         var colaboradorInfo = new {
                             idColaborador = colaborador.id,
                             nome = colaborador.nome,
-                            matricula = colaborador.matricula,
                             departamento = departamentoColaborador.titulo,
                             cargo = cargoColaborador.titulo
                         };

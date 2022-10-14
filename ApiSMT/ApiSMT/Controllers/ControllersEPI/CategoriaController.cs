@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ControleEPI.DTO;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 
 namespace ApiSMT.Controllers.ControllersEPI
 {
@@ -12,9 +12,9 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class CategoriaController : ControllerBase
     {
-        private readonly ICategoriasDAL _categorias;
-        private readonly IProdutosDAL _produtos;
-        private readonly IConUserDAL _usuario;
+        private readonly ICategoriasBLL _categorias;
+        private readonly IProdutosBLL _produtos;
+        private readonly IConUserBLL _usuario;
 
         /// <summary>
         /// Construtor CategoriaController
@@ -22,7 +22,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="categorias"></param>
         /// <param name="produtos"></param>
         /// <param name="usuario"></param>
-        public CategoriaController(ICategoriasDAL categorias, IProdutosDAL produtos, IConUserDAL usuario)
+        public CategoriaController(ICategoriasBLL categorias, IProdutosBLL produtos, IConUserBLL usuario)
         {
             _categorias = categorias;
             _produtos = produtos;
@@ -34,7 +34,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> getCategorias()
+        public async Task<ActionResult> getCategorias()
         {
             try
             {
@@ -104,6 +104,7 @@ namespace ApiSMT.Controllers.ControllersEPI
                         if (checkCategoria == null)
                         {
                             var novaCategoria = await _categorias.Insert(categoria);
+
                             return Ok(new { message = "Categoria inserida com sucesso!!!", result = true, data = novaCategoria });
                         }
                         else

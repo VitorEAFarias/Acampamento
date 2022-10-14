@@ -2,7 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using ControleEPI.DTO.E_Mail;
 
 namespace ApiSMT.Utilitários
@@ -10,7 +10,7 @@ namespace ApiSMT.Utilitários
     /// <summary>
     /// Classe de envio de e-mail
     /// </summary>
-    public class MailService : IMailServiceDAL
+    public class MailService : IMailServiceBLL
     {
         private readonly EmailSettingsDTO _mailSettings;
 
@@ -34,15 +34,8 @@ namespace ApiSMT.Utilitários
             SmtpClient smtp = new SmtpClient();
             EncryptDecrypt crypt = new EncryptDecrypt();
 
-            var hash = crypt.Decrypt(_mailSettings.Password);
-            string ConteudoEmail = string.Empty;            
-
-            foreach (var item in mailRequest.conteudo)
-            {
-                ConteudoEmail += "<p> " + item.nome + " </p>";
-                ConteudoEmail += "<p> " + item.statusPedido + " </p>";
-            }
-
+            var hash = crypt.Decrypt(_mailSettings.Password);            
+            
             var content = "<html>" +
                                 "<head>" +
                                     "<meta http - equiv = 'Content-Type' content = 'text/html; charset=UTF-8' />" +
@@ -50,7 +43,7 @@ namespace ApiSMT.Utilitários
                                     "<meta http - equiv = 'X-UA-Compatible' content = 'IE=edge' >" +
                                 "</head >" +
                                 "<body style = 'margin: 0; padding: 0;' >" +
-                                    ConteudoEmail +                                
+                                    mailRequest.Conteudo +                                
                                 "</body>" +
                             "</html>";            
 

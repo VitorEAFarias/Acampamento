@@ -26,7 +26,6 @@ namespace ControleEPI.DTO
         public int motivo { get; set; }
         [JsonField]
         public IList<Produtos> produtos { get; set; }
-        public int idStatus { get; set; }
     }  
 
     public class Produtos
@@ -34,6 +33,5 @@ namespace ControleEPI.DTO
         public int id { get; set; }
         public string nome { get; set; }
         public int quantidade { get; set; }
-        public bool entregue { get; set; }
     }
 }

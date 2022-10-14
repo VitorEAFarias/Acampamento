@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ControleEPI.DTO;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using System;
 
 namespace ApiSMT.Controllers.ControllersEPI
@@ -14,12 +14,12 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class ProdutosController : ControllerBase
     {
-        private readonly IProdutosDAL _produtos;
-        private readonly IFornecedoresDAL _fornecedor;
-        private readonly ICategoriasDAL _categoria;
-        private readonly ILogEstoqueDAL _logEstoque;
-        private readonly IConUserDAL _usuario;
-        private readonly IEpiVinculoDAL _vinculo;
+        private readonly IProdutosBLL _produtos;
+        private readonly IFornecedoresBLL _fornecedor;
+        private readonly ICategoriasBLL _categoria;
+        private readonly ILogEstoqueBLL _logEstoque;
+        private readonly IConUserBLL _usuario;
+        private readonly IEpiVinculoBLL _vinculo;
 
         /// <summary>
         /// Construtor de ProdutosController
@@ -30,7 +30,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="logEstoque"></param>
         /// <param name="usuario"></param>
         /// <param name="vinculo"></param>
-        public ProdutosController(IProdutosDAL produto, IFornecedoresDAL fornecedor, ICategoriasDAL categoria, ILogEstoqueDAL logEstoque, IConUserDAL usuario, IEpiVinculoDAL vinculo)
+        public ProdutosController(IProdutosBLL produto, IFornecedoresBLL fornecedor, ICategoriasBLL categoria, ILogEstoqueBLL logEstoque, IConUserBLL usuario, IEpiVinculoBLL vinculo)
         {
             _produtos = produto;
             _fornecedor = fornecedor;
@@ -380,16 +380,25 @@ namespace ApiSMT.Controllers.ControllersEPI
 
                 if (user != null)
                 {
-                    if (produto.id != 0)
-                    {
-                        await _produtos.Update(produto);
+                    var checkProduto = await _produtos.getNomeProduto(produto.nome);
 
-                        return Ok(new { message = produto.nome + " Atualizado com sucesso!!!", result = true });
+                    if (checkProduto == null)
+                    {
+                        if (produto.id != 0)
+                        {
+                            await _produtos.Update(produto);
+
+                            return Ok(new { message = produto.nome + " Atualizado com sucesso!!!", result = true });
+                        }
+                        else
+                        {
+                            return BadRequest(new { message = "Nenhum produto encontrado!!!", result = false });
+                        }
                     }
                     else
                     {
-                        return BadRequest(new { message = "Nenhum produto encontrado!!!", result = false });
-                    }
+                        return BadRequest(new { message = "Ja existe um produto chamado: '"+checkProduto.nome+"'", result = false });   
+                    }                    
                 }
                 else
                 {

@@ -43,20 +43,20 @@ namespace ApiSMT
             webBuilder.UseContentRoot(Directory.GetCurrentDirectory()).UseIISIntegration().UseKestrel().ConfigureKestrel(options =>
             {
                 // HTTP 5000
-                options.ListenLocalhost(5000);
-                options.ListenAnyIP(5000);
+                options.ListenLocalhost(777);
+                options.ListenAnyIP(777);
 
                 // HTTPS 5001
-                options.ListenAnyIP(5001, builder =>
-                {
-                    builder.UseHttps();
-                });
-                options.ListenLocalhost(5001, builder =>
-                {
-                    builder.UseHttps();
-                });
+                //options.ListenAnyIP(778, builder =>
+                //{
+                //    builder.UseHttps();
+                //});
+                //options.ListenLocalhost(778, builder =>
+                //{
+                //    builder.UseHttps();
+                //});
 
             }).UseStartup<Startup>();
-        });
+        }).UseWindowsService();
     }
 }

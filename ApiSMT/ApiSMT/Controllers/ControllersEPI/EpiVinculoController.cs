@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ControleEPI.DTO;
 using ControleEPI.DTO.FromBody;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using System;
 
 namespace ApiSMT.Controllers.ControllersEPI
@@ -15,11 +15,11 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class EpiVinculoController : ControllerBase
     {
-        private readonly IEpiVinculoDAL _epivinculo;
-        private readonly IConUserDAL _usuario;
-        private readonly IProdutosDAL _produto;
-        private readonly ICategoriasDAL _categoria;
-        private readonly IFornecedoresDAL _fornecedor;
+        private readonly IEpiVinculoBLL _epivinculo;
+        private readonly IConUserBLL _usuario;
+        private readonly IProdutosBLL _produto;
+        private readonly ICategoriasBLL _categoria;
+        private readonly IFornecedoresBLL _fornecedor;
 
         /// <summary>
         /// Construtor EpiVinculoController
@@ -29,7 +29,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="produto"></param>
         /// <param name="categoria"></param>
         /// <param name="fornecedor"></param>
-        public EpiVinculoController(IEpiVinculoDAL epivinculo, IConUserDAL usuario, IProdutosDAL produto, ICategoriasDAL categoria, IFornecedoresDAL fornecedor)
+        public EpiVinculoController(IEpiVinculoBLL epivinculo, IConUserBLL usuario, IProdutosBLL produto, ICategoriasBLL categoria, IFornecedoresBLL fornecedor)
         {
             _epivinculo = epivinculo;
             _usuario = usuario;
@@ -83,7 +83,7 @@ namespace ApiSMT.Controllers.ControllersEPI
                 {
                     foreach (var item in epiVinculos)
                     {
-                        var produto = await _produto.getProduto(item.id);
+                        var produto = await _produto.getProduto(item.idItem);
 
                         if(produto != null)
                         {
@@ -94,7 +94,7 @@ namespace ApiSMT.Controllers.ControllersEPI
                             {
                                 item.id,
                                 item.idUsuario,
-                                item.produto,
+                                item.idItem,
                                 item.dataVinculo,
                                 item.ativo,
                                 nome = produto.nome,
@@ -115,6 +115,59 @@ namespace ApiSMT.Controllers.ControllersEPI
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        /// <summary>
+        /// Seleciona os produto ao qual fazem parte de uma categoria especifica
+        /// </summary>
+        /// <param name="idUsuario"></param>
+        /// <returns></returns>
+        [HttpGet("pendente/{idUsuario}")]
+        public async Task<ActionResult<ProdutosDTO>> GetEpiPendente([FromRoute] int idUsuario)
+        {
+            try
+            {
+                List<object> listaEpiVinculadas = new List<object>();
+
+                var epiVinculos = await _epivinculo.GetUsuarioVinculoStatus(idUsuario, 2);
+
+                if (epiVinculos != null)
+                {
+                    foreach (var item in epiVinculos)
+                    {
+                        var produto = await _produto.getProduto(item.idItem);
+
+                        if (produto != null)
+                        {
+                            var categoria = await _categoria.getCategoria(produto.idCategoria);
+                            var fornecedor = await _fornecedor.getFornecedor(produto.idFornecedor);
+
+                            listaEpiVinculadas.Add(new
+                            {
+                                item.id,
+                                item.idUsuario,
+                                item.idItem,
+                                item.dataVinculo,
+                                item.ativo,
+                                nome = produto.nome,
+                                ca = produto.ca,
+                                quantidade = produto.quantidade,
+                                categoria = categoria.nome,
+                                fornecedor = fornecedor.nome
+                            });
+                        }
+                    }
+                    return Ok(new { message = "Lista encontrada", lista = listaEpiVinculadas, result = true });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Não foi encontrado nenhum vinculo", result = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -150,9 +203,10 @@ namespace ApiSMT.Controllers.ControllersEPI
                                 
                                 await _produto.Update(produto);
 
-                                vincularProdutos.produto = Convert.ToString(produto.id);
+                                vincularProdutos.idItem = produto.id;
+                                vincularProdutos.idUsuarioVinculo = Convert.ToInt32(vinculo.usuarioLogado);
                                 vincularProdutos.dataVinculo = dataVinculo;
-                                vincularProdutos.ativo = true;
+                                vincularProdutos.ativo = 2;
 
                                 await _epivinculo.Insert(vincularProdutos);
 

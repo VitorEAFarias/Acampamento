@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using ControleEPI.DTO;
 using System;
 
@@ -13,13 +13,13 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class MotivosController : ControllerBase
     {
-        private readonly IMotivosDAL _motivo;
+        private readonly IMotivosBLL _motivo;
 
         /// <summary>
         /// Construtor MotivosController
         /// </summary>
         /// <param name="motivo"></param>
-        public MotivosController(IMotivosDAL motivo)
+        public MotivosController(IMotivosBLL motivo)
         {
             _motivo = motivo;
         }

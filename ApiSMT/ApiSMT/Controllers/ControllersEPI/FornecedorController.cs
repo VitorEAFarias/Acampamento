@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ControleEPI.DTO;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 
 namespace ApiSMT.Controllers.ControllersEPI
 {
@@ -12,9 +12,9 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class FornecedorController : ControllerBase
     {
-        private readonly IFornecedoresDAL _fornecedor;
-        private readonly IProdutosDAL _produtos;
-        private readonly IConUserDAL _usuario;
+        private readonly IFornecedoresBLL _fornecedor;
+        private readonly IProdutosBLL _produtos;
+        private readonly IConUserBLL _usuario;
 
         /// <summary>
         /// Construtor FornecedorController
@@ -22,7 +22,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="fornecedor"></param>
         /// <param name="produtos"></param>
         /// <param name="usuario"></param>
-        public FornecedorController(IFornecedoresDAL fornecedor, IProdutosDAL produtos, IConUserDAL usuario)
+        public FornecedorController(IFornecedoresBLL fornecedor, IProdutosBLL produtos, IConUserBLL usuario)
         {
             _fornecedor = fornecedor;
             _produtos = produtos;

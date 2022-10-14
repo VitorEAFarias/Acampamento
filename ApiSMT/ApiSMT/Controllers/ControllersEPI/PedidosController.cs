@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using ControleEPI.DTO;
 using System;
+using Microsoft.IdentityModel.Tokens;
 
 namespace ApiSMT.Controllers.ControllersEPI
 {
@@ -14,10 +15,12 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class PedidosController : ControllerBase
     {
-        private readonly IPedidosDAL _pedidos;
-        private readonly IStatusDAL _status;
-        private readonly IMotivosDAL _motivos;
-        private readonly IConUserDAL _conUser;
+        private readonly IPedidosBLL _pedidos;
+        private readonly IPedidosStatusBLL _pedidosStatus;
+        private readonly IStatusBLL _status;
+        private readonly IMotivosBLL _motivos;
+        private readonly IConUserBLL _conUser;
+        private readonly IProdutosBLL _produtos;
 
         /// <summary>
         /// Construtor PedidosController
@@ -26,12 +29,16 @@ namespace ApiSMT.Controllers.ControllersEPI
         /// <param name="status"></param>
         /// <param name="motivos"></param>
         /// <param name="conUser"></param>
-        public PedidosController(IPedidosDAL pedidos, IStatusDAL status, IMotivosDAL motivos, IConUserDAL conUser)
+        /// <param name="produtos"></param>
+        /// <param name="pedidosStatus"></param>
+        public PedidosController(IPedidosBLL pedidos, IPedidosStatusBLL pedidosStatus, IStatusBLL status, IMotivosBLL motivos, IConUserBLL conUser, IProdutosBLL produtos)
         {
             _pedidos = pedidos;
+            _pedidosStatus = pedidosStatus;
             _status = status;
             _motivos = motivos;
             _conUser = conUser;
+            _produtos = produtos;
         }
 
         /// <summary>
@@ -53,7 +60,6 @@ namespace ApiSMT.Controllers.ControllersEPI
                     Pedidos.descricao = pedido.descricao;
                     Pedidos.motivo = pedido.motivo;
                     Pedidos.produtos = pedido.produtos;
-                    Pedidos.idStatus = pedido.idStatus;
 
                     var novoPedido = await _pedidos.Insert(Pedidos);
 
@@ -68,6 +74,108 @@ namespace ApiSMT.Controllers.ControllersEPI
             {
                 return BadRequest(ex.Message);
             }        
+        }
+
+        /// <summary>
+        /// Get para pedidos de compras em aberto
+        /// </summary>
+        /// <param name="idStatus"></param>
+        /// <returns></returns>
+        [HttpGet("status/{idStatus}")]
+        public async Task<ActionResult<PedidosDTO>> getPedidosCompras(int idStatus)
+        {
+            try
+            {
+                var pedidosStatusCompras = await _pedidosStatus.getPedidosCompras(idStatus);
+
+                if (!pedidosStatusCompras.IsNullOrEmpty())
+                {
+                    var produtosCompras = new List<object>();
+
+                    foreach (var item in pedidosStatusCompras)
+                    {
+                        var pedidosCompras = await _pedidos.getPedidos(item.idPedido);
+
+                        foreach (var itemPedidos in pedidosCompras)
+                        {
+                            var usuario = await _conUser.GetEmp(itemPedidos.idUsuario);
+
+                            produtosCompras.Add(new
+                            {
+                                id = itemPedidos.id,
+                                nome = itemPedidos.descricao,
+                                usuario = usuario.nome
+                            });
+                        }                        
+                    }
+
+                    return Ok(new { message = "Pedido encontrado", lista = produtosCompras, result = true });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Nenhum pedido de compra encontrado", result = false });
+                }
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Seleciona um pedido
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PedidosDTO>> GetPedido(int id)
+        {
+            try
+            {
+                var pedido = await _pedidos.getPedido(id);
+
+                if (pedido != null)
+                {
+                    var motivo = await _motivos.getMotivo(pedido.motivo);
+                    var usuario = await _conUser.GetEmp(pedido.idUsuario);
+
+                    var lista = new List<object>();
+
+                    foreach (var value in pedido.produtos)
+                    {
+                        var query = await _produtos.getProduto(value.id);
+
+                        lista.Add(new
+                        {
+                            value.id,
+                            value.quantidade,
+                            value.nome,
+                            estoque = query.quantidade
+                        });
+                    }
+
+                    var item = new
+                    {
+                        pedido.id,
+                        pedido.data,
+                        pedido.descricao,
+                        produtos = lista,
+                        motivo = motivo.nome,
+                        usuario = usuario.nome
+                    };
+
+
+                    return Ok(new { message = "Pedido encontrado", pedido = item, result = true });
+                }
+                else
+                {
+                    return BadRequest(new { message = "Pedido não encontrado", result = false });
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         /// <summary>
@@ -87,7 +195,6 @@ namespace ApiSMT.Controllers.ControllersEPI
                 foreach(var item in pedidos)
                 {
                     var motivo = await _motivos.getMotivo(item.motivo);
-                    var status = await _status.getStatus(item.idStatus);
                     var usuario = await _conUser.GetEmp(item.idUsuario);
 
                     listaPedidos.Add(new
@@ -97,13 +204,12 @@ namespace ApiSMT.Controllers.ControllersEPI
                         item.descricao,
                         item.produtos,
                         motivo = motivo.nome,
-                        status = status.nome,
                         usuario = usuario.nome
                     });
 
                 }
 
-                return Ok(new { message = "Lista de pedidos encontrado", lista = pedidos, result = true });
+                return Ok(new { message = "Lista de pedidos encontrado", lista = listaPedidos, result = true });
 
             }
             catch (System.Exception ex)
@@ -112,32 +218,32 @@ namespace ApiSMT.Controllers.ControllersEPI
             }
         }
 
-        /// <summary>
-        /// Verifica o status do pedido selecionado
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet("status/{id}")]
-        public async Task<ActionResult<StatusDTO>> getStatus(int id)
-        {
-            try
-            {
-                if (id != 0)
-                {
-                    var status = await _status.getStatus(id);
+        ///// <summary>
+        ///// Verifica o status do pedido selecionado
+        ///// </summary>
+        ///// <param name="id"></param>
+        ///// <returns></returns>
+        //[HttpGet("status/{id}")]
+        //public async Task<ActionResult<StatusDTO>> getStatus(int id)
+        //{
+        //    try
+        //    {
+        //        if (id != 0)
+        //        {
+        //            var status = await _status.getStatus(id);
 
-                    return Ok(new { message = "Status encontrado", status = status.nome, result = true });
-                }
-                else
-                {
-                    return BadRequest(new { message = "Nenhum status selecionado", result = false });
-                }
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+        //            return Ok(new { message = "Status encontrado", status = status.nome, result = true });
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(new { message = "Nenhum status selecionado", result = false });
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
+        //    }
+        //}
 
         /// <summary>
         /// Lista todos os pedidos e verifica seus respectivos status
@@ -174,7 +280,7 @@ namespace ApiSMT.Controllers.ControllersEPI
         {
             try
             {
-                var pedidos = await _pedidos.getPedidos();
+                var pedidos = await _pedidos.getTodosPedidos();
 
                 return Ok( new { message = "lista encontrada", result = true, lista = pedidos });
             }

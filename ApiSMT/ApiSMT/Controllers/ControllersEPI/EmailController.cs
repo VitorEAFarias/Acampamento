@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ControleEPI.DTO.E_Mail;
-using ControleEPI.DAL;
+using ControleEPI.BLL;
 using System;
 
 namespace ApiSMT.Controllers.ControllersEPI
@@ -13,13 +13,13 @@ namespace ApiSMT.Controllers.ControllersEPI
     [ApiController]
     public class EmailController : ControllerBase
     {
-        private readonly IMailServiceDAL mailService;
+        private readonly IMailServiceBLL mailService;
 
         /// <summary>
         /// Construtor EmailController
         /// </summary>
         /// <param name="mailService"></param>
-        public EmailController(IMailServiceDAL mailService)
+        public EmailController(IMailServiceBLL mailService)
         {
             this.mailService = mailService;
         }

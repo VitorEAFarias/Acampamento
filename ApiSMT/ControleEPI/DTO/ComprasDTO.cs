@@ -16,25 +16,16 @@ namespace ControleEPI.DTO
             builder.Property(e => e.produtos).HasConversion(
             v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
             v => JsonConvert.DeserializeObject<IList<PedidosProdutos>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-
-            builder.Property(e => e.idPedido).HasConversion(
-            x => JsonConvert.SerializeObject(x, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            x => JsonConvert.DeserializeObject<IList<Pedidos>>(x, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id { get; set; }
         [JsonField]
         public IList<PedidosProdutos> produtos { get; set; }
+        public int idUsuario { get; set; }
         public DateTime? dataCompra { get; set; }
         public decimal valorTotalCompra { get; set; }
         public bool ativo { get; set; }
-        [JsonField]
-        public IEnumerable<Pedidos> idPedido { get; set; }
-    }
-
-    public class Pedidos
-    {
         public int idPedido { get; set; }
     }
 
