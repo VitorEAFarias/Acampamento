@@ -8,6 +8,7 @@ namespace Vestimenta.BLL
     {
         Task<VestRepositorioDTO> Insert(VestRepositorioDTO repo);
         Task<VestRepositorioDTO> getRepositorio(int Id);
+        Task<VestRepositorioDTO> getRepositorioItensPedidos(int idPedido, int idItem);
         Task<IList<VestRepositorioDTO>> getRepositorioStatus(string status);
         Task<IList<VestRepositorioDTO>> getRepositorios();
         Task Update(VestRepositorioDTO repo);

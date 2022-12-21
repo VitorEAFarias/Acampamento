@@ -1,66 +1,52 @@
 ﻿using ControleEPI.DTO._DbContext;
 using ControleEPI.DTO;
-using ControleEPI.BLL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ControleEPI.BLL;
 
 namespace ControleEPI.DAL
 {
-    public class EpiVinculoDAL : IEpiVinculoBLL
+    public class EPIVinculoDAL : IEPIVinculoBLL
     {
-        public readonly AppDbContext _context;
-        public EpiVinculoDAL(AppDbContext context)
+        private readonly AppDbContext _context;
+        public EPIVinculoDAL(AppDbContext context)
         {
             _context = context;
         }
-
-        public async Task Delete(int Id)
+        public async Task<EPIVinculoDTO> insereVinculo(EPIVinculoDTO vinculo)
         {
-            var epiVinculo = await _context.EPIepiVinculo.FindAsync(Id);
-            _context.EPIepiVinculo.Remove(epiVinculo);
-
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task<EpiVinculoDTO> GetProdutoVinculo(int IdProduto)
-        {
-            return await _context.EPIepiVinculo.FromSqlRaw("SELECT * FROM produtos where produto = '" + IdProduto + "'").FirstOrDefaultAsync();
-        }
-
-        public async Task<IEnumerable<EpiVinculoDTO>> GetVinculos()
-        {
-            return await _context.EPIepiVinculo.ToListAsync();
-        }
-
-        public async Task<IEnumerable<EpiVinculoDTO>> GetUsuarioVinculo(int Id)
-        {
-            var query =  await _context.EPIepiVinculo.FromSqlRaw("SELECT * FROM epiVinculo where idUsuario = '" + Id + "'").ToListAsync();
-            return query;
-        }
-
-        public async Task<IEnumerable<EpiVinculoDTO>> GetUsuarioVinculoStatus(int Id, int status)
-        {
-            var query = await _context.EPIepiVinculo.FromSqlRaw("SELECT * FROM epiVinculo where idUsuario = '" + Id + "' AND ativo = '"+status+"'").ToListAsync();
-            return query;
-        }
-
-        public async Task<EpiVinculoDTO> GetVinculo(int Id)
-        {
-            return await _context.EPIepiVinculo.FindAsync(Id);
-        }
-
-        public async Task<EpiVinculoDTO> Insert(EpiVinculoDTO epivinculo)
-        {
-            _context.EPIepiVinculo.Add(epivinculo);
+            _context.EPIVinculo.Add(vinculo);
             await _context.SaveChangesAsync();
 
-            return epivinculo;
+            return vinculo;
         }
 
-        public async Task Update(EpiVinculoDTO epivinculo)
+        public async Task<IList<EPIVinculoDTO>> localizaVinculoStatus(int status)
         {
-            _context.Entry(epivinculo).State = EntityState.Modified;
+            return await _context.EPIVinculo.FromSqlRaw("SELECT * FROM EPIVinculo WHERE status = '" + status + "'").ToListAsync();
+        }
+
+        public async Task<IList<EPIVinculoDTO>> localizaVinculoUsuario(int idUsuario)
+        {
+            return await _context.EPIVinculo.FromSqlRaw("SELECT * FROM EPIVinculo WHERE idUsuario = '" + idUsuario + "'").ToListAsync();
+        }
+
+        public async Task<EPIVinculoDTO> localizaVinculo(int Id)
+        {
+            return await _context.EPIVinculo.FindAsync(Id);
+        }
+
+        public async Task<IList<EPIVinculoDTO>> localizaVinculos()
+        {
+            return await _context.EPIVinculo.ToListAsync();
+        }
+
+        public async Task Update(EPIVinculoDTO vinculo)
+        {
+            _context.ChangeTracker.Clear();
+
+            _context.Entry(vinculo).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }
     }

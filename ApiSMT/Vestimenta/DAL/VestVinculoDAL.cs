@@ -4,6 +4,7 @@ using Vestimenta.BLL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Vestimenta.DAL
 {
@@ -34,9 +35,14 @@ namespace Vestimenta.DAL
             return await _context.VestVinculo.FromSqlRaw("SELECT * FROM VestVinculo WHERE status = '"+idStatus+"' AND idUsuario = '"+idUsuario+"'").ToListAsync();
         }
 
+        public async Task<VestVinculoDTO> getVinculoTamanho(int idPedido, string tamanho)
+        {
+            return await _context.VestVinculo.FromSqlRaw("SELECT * FROM VestVinculo WHERE status = 4 AND idPedido = '" + idPedido + "' AND tamanhoVestVinculo = '"+tamanho+"'").OrderBy(c => c.id).FirstOrDefaultAsync();
+        }
+
         public async Task<VestVinculoDTO> getUsuarioVinculo(int id)
         {
-            return await _context.VestVinculo.FromSqlRaw("SELECT * FROM VestVinculo WHERE idUsuario = '"+id+"'").FirstOrDefaultAsync();
+            return await _context.VestVinculo.FromSqlRaw("SELECT * FROM VestVinculo WHERE idUsuario = '"+id+"'").OrderBy(c => c.id).FirstOrDefaultAsync();
         }
 
         public async Task<IList<VestVinculoDTO>> getItensUsuarios(int idUsuario)

@@ -31,12 +31,17 @@ namespace Vestimenta.DAL
 
         public async Task<IList<VestPedidosDTO>> getPedidosUsuarios(int idUsuario)
         {
-            return await _context.VestPedidos.FromSqlRaw("SELECT * FROM VestPedidos WHERE idSupervisor = '"+idUsuario+"'").ToListAsync();
+            return await _context.VestPedidos.FromSqlRaw("SELECT * FROM VestPedidos WHERE idUsuario = '"+idUsuario+"'").ToListAsync();
         }
 
         public async Task<IList<VestPedidosDTO>> getLiberadoVinculo()
         {
             return await _context.VestPedidos.FromSqlRaw("SELECT * FROM VestPedidos WHERE status != 2 AND status != 3").ToListAsync();
+        }
+
+        public async Task<IList<VestPedidosDTO>> getPedidosPendentes()
+        {
+            return await _context.VestPedidos.FromSqlRaw("SELECT * FROM VestPedidos WHERE status = 1").ToListAsync();
         }
 
         public async Task<VestPedidosDTO> getPedido(int Id)

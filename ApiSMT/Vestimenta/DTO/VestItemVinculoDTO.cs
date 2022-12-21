@@ -12,5 +12,6 @@ namespace Vestimenta.DTO
         public DateTime dataAlteracao { get; set; }
         public int idItem { get; set; }
         public int idPedido { get; set; }
+        public string usado { get; set; }
     }
 }

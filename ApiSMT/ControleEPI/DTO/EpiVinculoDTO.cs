@@ -2,14 +2,14 @@
 
 namespace ControleEPI.DTO
 {
-    public class EpiVinculoDTO
+    public class EPIVinculoDTO
     {
         public int id { get; set; }
         public int idUsuario { get; set; }
         public int idItem { get; set; }
-        public DateTime? dataVinculo { get; set; }
-        public int ativo { get; set; }
-        public string token { get; set; }
-        public int idUsuarioVinculo { get; set; }
+        public DateTime dataVinculo { get; set; }
+        public int status { get; set; }
+        public DateTime dataDevolucao { get; set; }
+        public DateTime validade { get; set; }
     }
 }

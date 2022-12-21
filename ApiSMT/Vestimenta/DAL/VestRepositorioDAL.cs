@@ -4,6 +4,7 @@ using Vestimenta.BLL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Vestimenta.DAL
 {
@@ -34,9 +35,15 @@ namespace Vestimenta.DAL
             return await _context.VestRepositorio.ToListAsync();
         }
 
+        public async Task<VestRepositorioDTO> getRepositorioItensPedidos(int idItem, int idPedido)
+        {
+            return await _context.VestRepositorio.FromSqlRaw("SELECT * FROM VestRepositorio WHERE idItem = '"+idItem+"' AND idPedido = '"+idPedido+"' " +
+                "AND enviadoCompra = 'N' AND ativo = 'Y'").OrderBy(c => c.id).FirstOrDefaultAsync();
+        }
+
         public async Task<IList<VestRepositorioDTO>> getRepositorioStatus(string status)
         {
-            return await _context.VestRepositorio.FromSqlRaw("SELECT * FROM VestRepositorio WHERE enviadoCompra = '"+status+"'").ToListAsync();
+            return await _context.VestRepositorio.FromSqlRaw("SELECT * FROM VestRepositorio WHERE enviadoCompra = '"+status+"' AND ativo = 'Y'").ToListAsync();
         }
 
         public async Task<VestRepositorioDTO> Insert(VestRepositorioDTO repo)

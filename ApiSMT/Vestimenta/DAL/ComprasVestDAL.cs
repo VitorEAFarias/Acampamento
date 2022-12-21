@@ -36,6 +36,8 @@ namespace Vestimenta.DAL
 
         public async Task<VestComprasDTO> Insert(VestComprasDTO compra)
         {
+            _context.ChangeTracker.Clear();
+
             _context.VestCompra.Add(compra);
             await _context.SaveChangesAsync();
 
@@ -44,6 +46,8 @@ namespace Vestimenta.DAL
 
         public async Task Update(VestComprasDTO compra)
         {
+            _context.ChangeTracker.Clear();
+
             _context.Entry(compra).State = EntityState.Modified;
             await _context.SaveChangesAsync();
         }

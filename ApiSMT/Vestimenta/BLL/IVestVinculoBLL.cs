@@ -8,6 +8,7 @@ namespace Vestimenta.BLL
     {
         Task<VestVinculoDTO> Insert(VestVinculoDTO vinculo);
         Task<VestVinculoDTO> getVinculo(int Id);
+        Task<VestVinculoDTO> getVinculoTamanho(int idPedidos, string tamanho);
         Task<VestVinculoDTO> getUsuarioVinculo(int id);
         Task<IList<VestVinculoDTO>> getVinculoPendente(int idStatus, int idUsuario);
         Task<IList<VestVinculoDTO>> getItensUsuarios(int idUsuario);        

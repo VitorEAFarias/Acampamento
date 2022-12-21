@@ -11,5 +11,6 @@ namespace Vestimenta.DTO
         public int quantidadeAnt { get; set; }
         public int quantidadeDep { get; set; }
         public string tamanho { get; set; }
+        public string usado { get; set; }
     }
 }

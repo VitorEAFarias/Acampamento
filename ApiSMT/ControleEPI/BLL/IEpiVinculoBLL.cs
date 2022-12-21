@@ -4,15 +4,13 @@ using ControleEPI.DTO;
 
 namespace ControleEPI.BLL
 {
-    public interface IEpiVinculoBLL
+    public interface IEPIVinculoBLL
     {
-        Task<IEnumerable<EpiVinculoDTO>> GetVinculos();
-        Task<EpiVinculoDTO> GetVinculo(int Id);
-        Task<IEnumerable<EpiVinculoDTO>> GetUsuarioVinculo(int Id);
-        Task<IEnumerable<EpiVinculoDTO>> GetUsuarioVinculoStatus(int Id, int status);
-        Task<EpiVinculoDTO> GetProdutoVinculo(int IdProduto);
-        Task<EpiVinculoDTO> Insert(EpiVinculoDTO epivinculo);
-        Task Update(EpiVinculoDTO epivinculo);
-        Task Delete(int Id);
+        Task<EPIVinculoDTO> insereVinculo(EPIVinculoDTO vinculo);
+        Task<IList<EPIVinculoDTO>> localizaVinculoStatus(int status);
+        Task<IList<EPIVinculoDTO>> localizaVinculoUsuario(int usuario);
+        Task<EPIVinculoDTO> localizaVinculo(int Id);
+        Task<IList<EPIVinculoDTO>> localizaVinculos();
+        Task Update(EPIVinculoDTO vinculo);
     }
 }

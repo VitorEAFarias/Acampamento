@@ -20,6 +20,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using ApiSMT.Utilitários.JWT;
 using ControleEPI.DTO.E_Mail;
+using DinkToPdf.Contracts;
+using DinkToPdf;
 
 namespace ApiSMT
 {
@@ -65,31 +67,39 @@ namespace ApiSMT
 
             string SMTConnection = Configuration.GetConnectionString("smt");
             string RHConnection = Configuration.GetConnectionString("rh");
-            
-            services.AddDbContextPool<AppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection)));
-            services.AddDbContextPool<AppDbContextRH>(options => options.UseMySql(RHConnection, ServerVersion.AutoDetect(RHConnection)));
-            services.AddDbContextPool<VestAppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection)));
+
+            services.AddDbContextPool<AppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection))
+            .ConfigureWarnings(warnings => warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning)));
+            services.AddDbContextPool<AppDbContextRH>(options => options.UseMySql(RHConnection, ServerVersion.AutoDetect(RHConnection))
+            .ConfigureWarnings(warnings => warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning)));
+            services.AddDbContextPool<VestAppDbContext>(options => options.UseMySql(SMTConnection, ServerVersion.AutoDetect(SMTConnection))
+            .ConfigureWarnings(warnings => warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.QueryPossibleUnintendedUseOfEqualsWarning)));
 
             services.Configure<EmailSettingsDTO>(Configuration.GetSection("EmailSettings"));
+            services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
             //EPI
-            services.AddScoped<ICategoriasBLL, CategoriaDAL>();
-            services.AddScoped<IConUserBLL, ConUserDAL>();
-            services.AddScoped<IEpiVinculoBLL, EpiVinculoDAL>();
-            services.AddScoped<IMotivosBLL, MotivosDAL>();
-            services.AddScoped<IPedidosBLL, PedidosDAL>();
-            services.AddScoped<IPedidosStatusBLL, PedidosStatusDAL>();
-            services.AddScoped<IProdutosBLL, ProdutosDAL>();
-            services.AddScoped<IStatusBLL, StatusDAL>();
-            services.AddScoped<IFornecedoresBLL, FornecedorDAL>();
-            services.AddScoped<IEpiVinculoBLL, EpiVinculoDAL>();
-            services.AddScoped<ILogEstoqueBLL, LogEstoqueDAL>();
-            services.AddScoped<IEmpContratosBLL, EmpContratosDAL>();
-            services.AddScoped<ICargosBLL, CargosDAL>();
-            services.AddScoped<IDepartamentosBLL, DepartamentosDAL>();
-            services.AddScoped<IComprasBLL, ComprasDAL>();
-            services.AddScoped<IItensBLL, ItensDAL>();
-            services.AddTransient<IMailServiceBLL, MailService>();
+            services.AddScoped<IEPICategoriasBLL, EPICategoriasDAL>();
+            services.AddScoped<IEPICertificadoAprovacaoBLL, EPICertificadoAprovacaoDAL>();
+            services.AddScoped<IEPIComprasBLL, EPIComprasDAL>();
+            services.AddScoped<IEPIFornecedoresBLL, EPIFornecedoresDAL>();
+            services.AddScoped<IEPILogComprasBLL, EPILogComprasDAL>();
+            services.AddScoped<IEPILogEstoqueBLL, EPILogEstoqueDAL>();
+            services.AddScoped<IEPIMotivosBLL, EPIMotivosDAL>();
+            services.AddScoped<IEPIPedidosAprovadosBLL, EPIPedidosAprovadosDAL>();
+            services.AddScoped<IEPIProdutosBLL, EPIProdutosDAL>();
+            services.AddScoped<IEPIPedidosBLL, EPIPedidosDAL>();
+            services.AddScoped<IEPIProdutosEstoqueBLL, EPIProdutosEstoqueDAL>();
+            services.AddScoped<IEPIStatusBLL, EPIStatusDAL>();
+            services.AddScoped<IEPITamanhosBLL, EPITamanhosDAL>();
+            services.AddScoped<IEPIVinculoBLL, EPIVinculoDAL>();
+            services.AddScoped<IRHCargosBLL, RHCargosDAL>();  
+            services.AddScoped<IRHConUserBLL, RHConUserDAL>();
+            services.AddScoped<IRHDepartamentosBLL, RHDepartamentosDAL>();
+            services.AddScoped<IRHEmpContratosBLL, RHEmpContratosDAL>();
+
+            //E-Mail
+            services.AddScoped<IMailService, MailService>();
 
             //Vestimenta
             services.AddScoped<IVestimentaBLL, VestimentaDAL>();
@@ -100,7 +110,7 @@ namespace ApiSMT
             services.AddScoped<ILogBLL, LogDAL>();
             services.AddScoped<IVestVinculoBLL, VestVinculoDAL>();
             services.AddScoped<IVestRepositorioBLL, VestRepositorioDAL>();
-            services.AddScoped<IVestItemVinculoBLL, VestItemVinculoDAL>();
+            services.AddScoped<IDinkPDFBLL, DinkPDFDAL>();
 
             services.AddControllers();
             services.AddHostedService<TimerHostedService>();

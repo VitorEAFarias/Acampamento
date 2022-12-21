@@ -22,11 +22,17 @@ namespace Vestimenta.DTO
         public int id { get; set; }
         [JsonField]
         public IList<ItemDTO> item { get; set; }
-        public int idSupervisor { get; set; }
+        public int idUsuario { get; set; }
         public DateTime dataPedido { get; set; }
         public int status { get; set; }
         public DateTime dataAlteracao { get; set; }
+        public string observacoes { get; set; }
         public int idUsuarioAlteracao { get; set; }
+
+        public VestPedidosDTO(string observacoes = "")
+        {
+            this.observacoes = observacoes;
+        }
     }    
 
     public class ItemDTO
@@ -37,5 +43,11 @@ namespace Vestimenta.DTO
         public int quantidade { get; set; }
         public int status { get; set; }
         public DateTime dataAlteracao { get; set; }
+        public string usado { get; set; }
+
+        public ItemDTO(string usado = "N")
+        {
+            this.usado = usado;
+        }
     }
 }

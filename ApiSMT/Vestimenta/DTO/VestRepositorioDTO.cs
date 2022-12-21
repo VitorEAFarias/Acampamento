@@ -11,5 +11,11 @@ namespace Vestimenta.DTO
         public DateTime dataAtualizacao { get; set; }
         public string tamanho { get; set; }
         public int quantidade { get; set; }
+        public string ativo { get; set; }
+
+        public VestRepositorioDTO(string ativo = "Y")
+        {
+            this.ativo = ativo;
+        }
     }    
 }

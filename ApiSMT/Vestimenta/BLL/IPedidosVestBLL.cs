@@ -11,6 +11,7 @@ namespace Vestimenta.BLL
         Task<IList<VestPedidosDTO>> getPedidosStatus(int idStatus);
         Task<IList<VestPedidosDTO>> getPedidosUsuarios(int idUsuario);
         Task<IList<VestPedidosDTO>> getPedidos();
+        Task<IList<VestPedidosDTO>> getPedidosPendentes();
         Task<IList<VestPedidosDTO>> getLiberadoVinculo();
         Task Update(VestPedidosDTO pedido);
         Task Delete(int id);

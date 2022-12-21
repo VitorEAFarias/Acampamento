@@ -16,16 +16,19 @@ namespace ControleEPI.DTO._DbContext
             modelBuilder.AddJsonFields();
         }
 
-        public DbSet<CategoriaDTO> EPIcategoria { get; set; }
-        public DbSet<EpiVinculoDTO> EPIepiVinculo { get; set; }
-        public DbSet<FornecedorDTO> EPIfornecedor { get; set; }
-        public DbSet<MotivoDTO> EPImotivos { get; set; }
-        public DbSet<PedidosDTO> EPIpedidos { get; set; }
-        public DbSet<PedidosStatusDTO> EPIpedidosStatus { get; set; }
-        public DbSet<ProdutosDTO> EPIprodutos { get; set; }
-        public DbSet<StatusDTO> EPIstatus { get; set; }
-        public DbSet<LogEstoqueDTO> EPIlogEstoque { get; set; }
-        public DbSet<ComprasDTO> EPIcompras { get; set; }
-        public DbSet<ItensDTO> EPIitens { get; set; }
+        public DbSet<EPICategoriasDTO> EPICategoria { get; set; }
+        public DbSet<EPICertificadoAprovacaoDTO> EPICertificadoAprovacao { get; set; }
+        public DbSet<EPIComprasDTO> EPICompras { get; set; }        
+        public DbSet<EPIFornecedoresDTO> EPIFornecedores { get; set; }
+        public DbSet<EPILogComprasDTO> EPILogCompras { get; set; }        
+        public DbSet<EPILogEstoqueDTO> EPILogEstoque { get; set; }
+        public DbSet<EPIMotivoDTO> EPIMotivos { get; set; }
+        public DbSet<EPIPedidosDTO> EPIPedidos { get; set; }
+        public DbSet<EPIPedidosAprovadosDTO> EPIPedidosAprovados { get; set; }
+        public DbSet<EPIProdutosDTO> EPIProdutos { get; set; }
+        public DbSet<EPIProdutosEstoqueDTO> EPIProdutosEstoque { get; set; }        
+        public DbSet<EPIStatusDTO> EPIStatus { get; set; }
+        public DbSet<EPITamanhosDTO> EPITamanhos { get; set; }
+        public DbSet<EPIVinculoDTO> EPIVinculo { get; set; }
     }
 }

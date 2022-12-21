@@ -1,29 +1,14 @@
-﻿using Innofactor.EfCoreJsonValueConverter;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System;
 
 namespace ControleEPI.DTO.FromBody
 {
     public class VinculoDTO
-    {
-        public void Configure(EntityTypeBuilder<VinculoDTO> builder)
-        {
-            builder.Property(e => e.produto).HasConversion(
-            v => JsonConvert.SerializeObject(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }),
-            v => JsonConvert.DeserializeObject<IList<ProdutoVinculo>>(v, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
-        }
-
-        public int usuario { get; set; }
-        public int usuarioLogado { get; set; }
-        [JsonField]
-        public IList<ProdutoVinculo> produto { get; set; }
-
-        public class ProdutoVinculo
-        {
-            public int id { get; set; }
-            public string nome { get; set; }
-            public int quantidade { get; set; }
-        }
+    {        
+        public string nomeUsuario{ get; set; }
+        public string nomeItem { get; set; }
+        public DateTime? dataVinculo { get; set; }
+        public DateTime? dataDevolucao { get; set; }
+        public string status { get; set; }
+        public DateTime? validade { get; set; }
     }
 }

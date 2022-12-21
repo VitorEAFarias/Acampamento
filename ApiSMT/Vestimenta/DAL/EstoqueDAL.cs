@@ -4,6 +4,7 @@ using Vestimenta.BLL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Vestimenta.DAL
 {
@@ -31,12 +32,17 @@ namespace Vestimenta.DAL
 
         public async Task<VestEstoqueDTO> getItemExistente(int idItem, string tamanho)
         {
-            return await _context.VestEstoque.FromSqlRaw("SELECT * FROM VestEstoque WHERE idItem = '" + idItem + "' AND tamanho = '" +tamanho+ "'").FirstOrDefaultAsync();
+            return await _context.VestEstoque.FromSqlRaw("SELECT * FROM VestEstoque WHERE idItem = '" + idItem + "' AND tamanho = '" +tamanho+ "' AND ativado = 'Y'").OrderBy(c => c.id).FirstOrDefaultAsync();
+        }
+
+        public async Task<VestEstoqueDTO> getDesativados(int idItem, string tamanho)
+        {
+            return await _context.VestEstoque.FromSqlRaw("SELECT * FROM VestEstoque WHERE idItem = '" + idItem + "' AND tamanho = '" + tamanho + "' AND ativado = 'N'").OrderBy(c => c.id).FirstOrDefaultAsync();
         }
 
         public async Task<IList<VestEstoqueDTO>> getItensExistentes(int idItens)
         {
-            return await _context.VestEstoque.FromSqlRaw("SELECT * FROM VestEstoque WHERE idItem = '" + idItens + "'").ToListAsync();
+            return await _context.VestEstoque.FromSqlRaw("SELECT * FROM VestEstoque WHERE idItem = '" + idItens + "' AND ativado = 'Y'").ToListAsync();
         }
 
         public async Task<IList<VestEstoqueDTO>> getEstoque()

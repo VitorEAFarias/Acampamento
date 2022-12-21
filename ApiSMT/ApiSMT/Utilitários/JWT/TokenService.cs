@@ -1,7 +1,10 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 
@@ -12,7 +15,7 @@ namespace ApiSMT.Utilitários.JWT
     /// </summary>
     public class TokenService : ITokenService
     {
-        private const double EXPIRY_DURATION_MINUTES = 3;
+        private const double EXPIRY_DURATION_MINUTES = 15;
 
         /// <summary>
         /// Função cria token
@@ -25,7 +28,7 @@ namespace ApiSMT.Utilitários.JWT
         {
             var claims = new[] 
             {
-                new Claim("id", usuario),                
+                new Claim("id", usuario),
                 //new Claim(ClaimTypes.Name, usuario),                
                 //new Claim(ClaimTypes.NameIdentifier, Guid.NewGuid().ToString())
             };
@@ -73,8 +76,7 @@ namespace ApiSMT.Utilitários.JWT
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return null;
+                return ex.Message;
             }
 
             return newToken;

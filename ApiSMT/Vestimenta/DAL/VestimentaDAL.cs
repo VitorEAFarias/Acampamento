@@ -4,6 +4,7 @@ using Vestimenta.BLL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Vestimenta.DAL
 {
@@ -24,27 +25,27 @@ namespace Vestimenta.DAL
             await _context.SaveChangesAsync();
         }
 
-        public async Task<VestimentaDTO> getVestimenta(int Id)
+        public async Task<VestVestimentaDTO> getVestimenta(int Id)
         {
             return await _context.VestVestimenta.FindAsync(Id);
         }
 
-        public async Task<VestimentaDTO> getNomeVestimenta(string Nome)
+        public async Task<VestVestimentaDTO> getNomeVestimenta(string Nome)
         {
-            return await _context.VestVestimenta.FromSqlRaw("SELECT * FROM VestVestimenta WHERE nome = '" + Nome + "'").FirstOrDefaultAsync();
+            return await _context.VestVestimenta.FromSqlRaw("SELECT * FROM VestVestimenta WHERE nome = '" + Nome + "'").OrderBy(c => c.id).FirstOrDefaultAsync();
         }
 
-        public async Task<IList<VestimentaDTO>> getItens(int idVestimenta)
+        public async Task<IList<VestVestimentaDTO>> getItens(int idVestimenta)
         {
             return await _context.VestVestimenta.FromSqlRaw("SELECT * from VestVestimenta WHERE id = '" +idVestimenta+ "'").ToListAsync();
         }
 
-        public async Task<IList<VestimentaDTO>> getVestimentas()
+        public async Task<IList<VestVestimentaDTO>> getVestimentas()
         {
-            return await _context.VestVestimenta.ToListAsync();
+            return await _context.VestVestimenta.FromSqlRaw("SELECT * FROM VestVestimenta WHERE ativo != 2").ToListAsync();
         }
 
-        public async Task<VestimentaDTO> Insert(VestimentaDTO vestimenta)
+        public async Task<VestVestimentaDTO> Insert(VestVestimentaDTO vestimenta)
         {
             _context.VestVestimenta.Add(vestimenta);
             await _context.SaveChangesAsync();
@@ -52,7 +53,7 @@ namespace Vestimenta.DAL
             return vestimenta;
         }
 
-        public async Task<VestimentaDTO> Update(VestimentaDTO vestimenta)
+        public async Task<VestVestimentaDTO> Update(VestVestimentaDTO vestimenta)
         {
             _context.ChangeTracker.Clear();
 

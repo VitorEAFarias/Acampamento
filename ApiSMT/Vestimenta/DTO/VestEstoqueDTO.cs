@@ -12,6 +12,8 @@ namespace Vestimenta.DTO
         public int quantidade { get; set; }
         public string tamanho { get; set; }
         public DateTime dataAlteracao{ get; set; }
+        public int quantidadeVinculado { get; set; }
         public int quantidadeUsado { get; set; }
+        public string ativado { get; set; }
     }
 }

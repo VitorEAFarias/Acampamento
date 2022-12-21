@@ -21,9 +21,8 @@ namespace Vestimenta.DTO._DbContext
         public DbSet<VestLogDTO> VestLog { get; set; }
         public DbSet<VestPedidosDTO> VestPedidos { get; set; }
         public DbSet<VestStatusDTO> VestStatus { get; set; }
-        public DbSet<VestimentaDTO> VestVestimenta { get; set; }
+        public DbSet<VestVestimentaDTO> VestVestimenta { get; set; }
         public DbSet<VestVinculoDTO> VestVinculo { get; set; }
         public DbSet<VestRepositorioDTO> VestRepositorio { get; set; }
-        public DbSet<VestItemVinculoDTO> VestItemVinculo { get; set; }
     }
 }

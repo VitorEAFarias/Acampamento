@@ -6,12 +6,12 @@ namespace Vestimenta.BLL
 {
     public interface IVestimentaBLL
     {
-        Task<VestimentaDTO> Insert(VestimentaDTO vestimenta);
-        Task<VestimentaDTO> getVestimenta(int Id);
-        Task<VestimentaDTO> getNomeVestimenta(string Nome);
-        Task<IList<VestimentaDTO>> getVestimentas();
-        Task<IList<VestimentaDTO>> getItens(int idVestimenta);
-        Task<VestimentaDTO> Update(VestimentaDTO vestimenta);
+        Task<VestVestimentaDTO> Insert(VestVestimentaDTO vestimenta);
+        Task<VestVestimentaDTO> getVestimenta(int Id);
+        Task<VestVestimentaDTO> getNomeVestimenta(string Nome);
+        Task<IList<VestVestimentaDTO>> getVestimentas();
+        Task<IList<VestVestimentaDTO>> getItens(int idVestimenta);
+        Task<VestVestimentaDTO> Update(VestVestimentaDTO vestimenta);
         Task Delete(int id);
     }
 }

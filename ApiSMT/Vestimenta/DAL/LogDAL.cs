@@ -36,6 +36,8 @@ namespace Vestimenta.DAL
 
         public async Task<VestLogDTO> Insert(VestLogDTO log)
         {
+            _context.ChangeTracker.Clear();
+
             _context.VestLog.Add(log);
             await _context.SaveChangesAsync();
 

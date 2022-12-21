@@ -4,6 +4,7 @@ using Vestimenta.BLL;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace Vestimenta.DAL
 {
@@ -31,7 +32,7 @@ namespace Vestimenta.DAL
 
         public async Task<VestStatusDTO> getNomeStatus(string nome)
         {
-            return await _context.VestStatus.FromSqlRaw("SELECT * FROM VestStatus WHERE nome = '" +nome+ "'").FirstOrDefaultAsync();
+            return await _context.VestStatus.FromSqlRaw("SELECT * FROM VestStatus WHERE nome = '" +nome+ "'").OrderBy(c => c.id).FirstOrDefaultAsync();
         }
 
         public async Task<IList<VestStatusDTO>> getTodosStatus()
