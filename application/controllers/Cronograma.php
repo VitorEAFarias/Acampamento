@@ -15,7 +15,6 @@ class Cronograma extends CI_Controller {
 	public function index()
 	{		
 		$this->data["cronograma"] = $this->m_cronograma->getCronograma();
-		print_r('testando git')
 		$this->data["content"] = $this->load->view("Cronograma/cronograma", $this->data, true);
 		$this->data["sidebar"] = $this->load->view("template/sidebar", null, true);
 		$this->data["footer"] = $this->load->view("template/footer", null, true); 
